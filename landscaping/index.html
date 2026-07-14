@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Verdara — Landscape Studio</title>
+  <meta name="description" content="Verdara is a premium landscape design studio. Gardens, hardscapes, and living spaces crafted with intention — from first sketch to final bloom." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Josefin+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌿</text></svg>" />
+</head>
+<body>
+
+  <!-- Loader -->
+  <div class="loader" id="loader" aria-hidden="true">
+    <div class="loader-inner">
+      <svg class="loader-leaf" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"/>
+        <path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"/>
+      </svg>
+      <span class="loader-word">Verdara</span>
+      <span class="loader-bar"><span class="loader-bar-fill" id="loaderBar"></span></span>
+    </div>
+  </div>
+
+  <!-- 3D canvas (fixed, behind everything) -->
+  <canvas id="scene" aria-hidden="true"></canvas>
+  <div class="canvas-fallback" id="canvasFallback" aria-hidden="true"></div>
+
+  <!-- Grain overlay -->
+  <div class="grain" aria-hidden="true"></div>
+
+  <!-- Scroll progress -->
+  <div class="progress-rail" aria-hidden="true"><div class="progress-thumb" id="progressThumb"></div></div>
+
+  <!-- Navigation -->
+  <header class="nav" id="nav">
+    <a class="nav-logo" href="#top" aria-label="Verdara home">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"/>
+        <path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"/>
+      </svg>
+      <span>Verdara</span>
+    </a>
+    <nav class="nav-links" aria-label="Primary">
+      <a href="#services">Services</a>
+      <a href="#process">Process</a>
+      <a href="#work">Work</a>
+      <a href="#voices">Voices</a>
+    </nav>
+    <a class="btn btn-nav" href="#contact">Start a Project</a>
+  </header>
+
+  <main id="top">
+
+    <!-- ===== HERO ===== -->
+    <section class="hero" id="hero" data-phase="0">
+      <div class="hero-inner">
+        <p class="eyebrow reveal">Landscape Design Studio — Est. 2009</p>
+        <h1 class="hero-title">
+          <span class="line"><span>Where&nbsp;Land</span></span>
+          <span class="line"><span>Becomes&nbsp;<em>Legacy</em></span></span>
+        </h1>
+        <p class="hero-sub reveal">We design gardens, courtyards, and living hillsides that grow
+          more beautiful every year. Scroll to walk the valley we planted.</p>
+        <div class="hero-actions reveal">
+          <a class="btn btn-primary" href="#contact">Begin Your Garden</a>
+          <a class="btn btn-ghost" href="#work">View Our Work</a>
+        </div>
+      </div>
+      <div class="scroll-cue" aria-hidden="true">
+        <span>Scroll</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14"/><path d="m19 12-7 7-7-7"/></svg>
+      </div>
+    </section>
+
+    <!-- ===== STATS STRIP ===== -->
+    <section class="strip" data-phase="0.5">
+      <div class="strip-inner">
+        <div class="stat reveal"><span class="stat-num" data-count="340">0</span><span class="stat-label">Gardens designed</span></div>
+        <div class="stat reveal"><span class="stat-num" data-count="16">0</span><span class="stat-label">Years of practice</span></div>
+        <div class="stat reveal"><span class="stat-num" data-count="12">0</span><span class="stat-label">Design awards</span></div>
+        <div class="stat reveal"><span class="stat-num" data-count="98">0</span><span class="stat-label">% clients returning</span></div>
+      </div>
+    </section>
+
+    <!-- ===== SERVICES ===== -->
+    <section class="section" id="services" data-phase="1">
+      <div class="section-head">
+        <span class="section-num" aria-hidden="true">01</span>
+        <p class="eyebrow reveal">What we do</p>
+        <h2 class="reveal">Three crafts,<br /><em>one living canvas</em></h2>
+      </div>
+      <div class="cards">
+        <article class="card reveal">
+          <div class="card-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 20h10"/><path d="M10 20c5.5-2.5.8-6.4 3-10"/><path d="M9.5 9.4c1.1.8 1.8 2.2 2.3 3.7-2 .4-3.5.4-4.8-.3-1.2-.6-2.3-1.9-3-4.2 2.8-.5 4.4 0 5.5.8z"/><path d="M14.1 6a7 7 0 0 0-1.1 4c1.9-.1 3.3-.6 4.3-1.4 1-1 1.6-2.3 1.7-4.6-3.7.3-4.9 1.4-4.9 2z"/></svg>
+          </div>
+          <h3>Garden Design</h3>
+          <p>Planting plans built around your soil, sun, and seasons. Native species, layered textures, and colour that unfolds across the year.</p>
+          <a class="card-link" href="#contact">Design my garden<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></a>
+        </article>
+        <article class="card reveal">
+          <div class="card-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="8" height="8" rx="1"/><rect x="13" y="3" width="8" height="5" rx="1"/><rect x="3" y="13" width="5" height="8" rx="1"/><rect x="10" y="13" width="11" height="8" rx="1"/></svg>
+          </div>
+          <h3>Hardscaping</h3>
+          <p>Stone paths, terraces, pergolas, and water features — the bones of the landscape, set to last generations.</p>
+          <a class="card-link" href="#contact">Shape my space<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></a>
+        </article>
+        <article class="card reveal">
+          <div class="card-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22a9 9 0 0 0 9-9c0-4-2.5-7.5-9-11-6.5 3.5-9 7-9 11a9 9 0 0 0 9 9Z"/><path d="M12 22V9"/><path d="M12 13c1.5-1 3-1.2 4.5-1"/><path d="M12 17c-1.5-1-3-1.2-4.5-1"/></svg>
+          </div>
+          <h3>Care & Stewardship</h3>
+          <p>Seasonal pruning, renewal planting, and quiet upkeep. We stay with every landscape we make, year after year.</p>
+          <a class="card-link" href="#contact">Keep it thriving<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></a>
+        </article>
+      </div>
+    </section>
+
+    <!-- ===== PROCESS ===== -->
+    <section class="section section-alt" id="process" data-phase="2">
+      <div class="section-head">
+        <span class="section-num" aria-hidden="true">02</span>
+        <p class="eyebrow reveal">How it happens</p>
+        <h2 class="reveal">From bare earth<br /><em>to first bloom</em></h2>
+      </div>
+      <ol class="steps">
+        <li class="step reveal">
+          <span class="step-num">1</span>
+          <h3>Walk the land</h3>
+          <p>We visit your site, read its light and slopes, and listen to how you want to live outdoors.</p>
+        </li>
+        <li class="step reveal">
+          <span class="step-num">2</span>
+          <h3>Draw the vision</h3>
+          <p>Concept sketches become detailed plans — planting palettes, materials, lighting, and water.</p>
+        </li>
+        <li class="step reveal">
+          <span class="step-num">3</span>
+          <h3>Build & plant</h3>
+          <p>Our own crews shape the terrain, lay the stone, and set every plant by hand.</p>
+        </li>
+        <li class="step reveal">
+          <span class="step-num">4</span>
+          <h3>Grow together</h3>
+          <p>We return through the seasons to prune, renew, and watch the design mature.</p>
+        </li>
+      </ol>
+    </section>
+
+    <!-- ===== WORK ===== -->
+    <section class="section" id="work" data-phase="3">
+      <div class="section-head">
+        <span class="section-num" aria-hidden="true">03</span>
+        <p class="eyebrow reveal">Selected work</p>
+        <h2 class="reveal">Landscapes we<br /><em>still visit</em></h2>
+      </div>
+      <div class="work-grid">
+        <article class="work-card reveal">
+          <div class="work-art work-art-1" aria-hidden="true">
+            <svg viewBox="0 0 400 260" preserveAspectRatio="xMidYMax slice">
+              <defs><linearGradient id="wg1" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fde68a"/><stop offset="1" stop-color="#f0fdf4"/></linearGradient></defs>
+              <rect width="400" height="260" fill="url(#wg1)"/>
+              <circle cx="320" cy="60" r="34" fill="#f59e0b" opacity=".85"/>
+              <path d="M0 200 Q100 140 200 185 T400 170 V260 H0 Z" fill="#16a34a" opacity=".55"/>
+              <path d="M0 225 Q120 175 240 215 T400 205 V260 H0 Z" fill="#15803d" opacity=".8"/>
+              <path d="M0 250 Q150 215 400 240 V260 H0 Z" fill="#14532d"/>
+              <g fill="#14532d"><path d="M90 205 l10 -34 10 34 z"/><rect x="98" y="205" width="4" height="12"/></g>
+              <g fill="#166534"><path d="M150 215 l12 -42 12 42 z"/><rect x="160" y="215" width="4" height="14"/></g>
+            </svg>
+          </div>
+          <div class="work-meta">
+            <h3>Hollow Creek Residence</h3>
+            <p>A terraced hillside garden with native meadow planting and a spring-fed rill.</p>
+            <span class="work-tag">Private estate · 2.4 acres</span>
+          </div>
+        </article>
+        <article class="work-card reveal">
+          <div class="work-art work-art-2" aria-hidden="true">
+            <svg viewBox="0 0 400 260" preserveAspectRatio="xMidYMax slice">
+              <defs><linearGradient id="wg2" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#bae6fd"/><stop offset="1" stop-color="#f0fdf4"/></linearGradient></defs>
+              <rect width="400" height="260" fill="url(#wg2)"/>
+              <path d="M0 190 Q130 150 260 180 T400 175 V260 H0 Z" fill="#22c55e" opacity=".5"/>
+              <rect x="150" y="120" width="100" height="80" rx="3" fill="#e7e5e4"/>
+              <rect x="150" y="112" width="100" height="10" rx="2" fill="#a8a29e"/>
+              <path d="M0 235 Q200 205 400 232 V260 H0 Z" fill="#15803d"/>
+              <ellipse cx="80" cy="228" rx="34" ry="10" fill="#0ea5e9" opacity=".7"/>
+              <g fill="#166534"><circle cx="310" cy="180" r="22"/><rect x="307" y="196" width="6" height="20"/></g>
+            </svg>
+          </div>
+          <div class="work-meta">
+            <h3>The Courtyard House</h3>
+            <p>An urban courtyard of limestone, reflecting pool, and clipped evergreen structure.</p>
+            <span class="work-tag">City garden · Design award 2024</span>
+          </div>
+        </article>
+        <article class="work-card reveal">
+          <div class="work-art work-art-3" aria-hidden="true">
+            <svg viewBox="0 0 400 260" preserveAspectRatio="xMidYMax slice">
+              <defs><linearGradient id="wg3" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fecdd3"/><stop offset="1" stop-color="#fff7ed"/></linearGradient></defs>
+              <rect width="400" height="260" fill="url(#wg3)"/>
+              <circle cx="70" cy="70" r="26" fill="#fb923c" opacity=".9"/>
+              <path d="M0 205 Q100 165 210 195 T400 185 V260 H0 Z" fill="#4d7c0f" opacity=".6"/>
+              <path d="M0 235 Q200 208 400 235 V260 H0 Z" fill="#3f6212"/>
+              <g stroke="#78350f" stroke-width="5" stroke-linecap="round"><path d="M250 210 V150"/><path d="M250 165 L225 140"/><path d="M250 175 L278 148"/></g>
+              <circle cx="250" cy="132" r="26" fill="#65a30d"/>
+              <circle cx="226" cy="146" r="16" fill="#4d7c0f"/>
+              <circle cx="277" cy="142" r="17" fill="#84cc16" opacity=".9"/>
+            </svg>
+          </div>
+          <div class="work-meta">
+            <h3>Orchard at Dusk</h3>
+            <p>A working orchard rewoven with wildflower under-planting and evening lighting.</p>
+            <span class="work-tag">Rural retreat · 6 acres</span>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- ===== TESTIMONIALS ===== -->
+    <section class="section section-alt" id="voices" data-phase="4">
+      <div class="section-head">
+        <span class="section-num" aria-hidden="true">04</span>
+        <p class="eyebrow reveal">Client voices</p>
+        <h2 class="reveal">Gardens speak.<br /><em>So do their owners</em></h2>
+      </div>
+      <div class="quotes">
+        <blockquote class="quote reveal">
+          <svg class="quote-mark" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M10 7H6a3 3 0 0 0-3 3v4a3 3 0 0 0 3 3h2a1 1 0 0 0 1-1v-4H6v-2a1 1 0 0 1 1-1h3V7zm11 0h-4a3 3 0 0 0-3 3v4a3 3 0 0 0 3 3h2a1 1 0 0 0 1-1v-4h-3v-2a1 1 0 0 1 1-1h3V7z"/></svg>
+          <p>Verdara didn't just plant a garden — they changed the way evening light moves through our home. Every season reveals something we hadn't noticed before.</p>
+          <footer><cite>Elena & Marcus Whitfield</cite><span>Hollow Creek Residence</span></footer>
+        </blockquote>
+        <blockquote class="quote reveal">
+          <svg class="quote-mark" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M10 7H6a3 3 0 0 0-3 3v4a3 3 0 0 0 3 3h2a1 1 0 0 0 1-1v-4H6v-2a1 1 0 0 1 1-1h3V7zm11 0h-4a3 3 0 0 0-3 3v4a3 3 0 0 0 3 3h2a1 1 0 0 0 1-1v-4h-3v-2a1 1 0 0 1 1-1h3V7z"/></svg>
+          <p>Three years on, the courtyard is the reason we bought the house next door too. Their maintenance crew treats it like their own.</p>
+          <footer><cite>Priya Raghavan</cite><span>The Courtyard House</span></footer>
+        </blockquote>
+      </div>
+    </section>
+
+    <!-- ===== CTA / CONTACT ===== -->
+    <section class="section contact" id="contact" data-phase="5">
+      <div class="contact-panel reveal">
+        <div class="contact-copy">
+          <p class="eyebrow">Begin</p>
+          <h2>Your land is<br /><em>already waiting</em></h2>
+          <p class="contact-sub">Tell us about your site and how you dream of using it. We reply within two working days with honest first thoughts.</p>
+          <ul class="contact-points">
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Free 45-minute site walk</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Fixed-fee design proposals</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Our own build & care crews</li>
+          </ul>
+        </div>
+        <form class="contact-form" id="contactForm" novalidate>
+          <div class="field">
+            <label for="f-name">Your name<span aria-hidden="true"> *</span></label>
+            <input id="f-name" name="name" type="text" autocomplete="name" required />
+            <p class="field-error" id="err-name" aria-live="polite"></p>
+          </div>
+          <div class="field">
+            <label for="f-email">Email<span aria-hidden="true"> *</span></label>
+            <input id="f-email" name="email" type="email" autocomplete="email" required />
+            <p class="field-error" id="err-email" aria-live="polite"></p>
+          </div>
+          <div class="field">
+            <label for="f-msg">About your land</label>
+            <textarea id="f-msg" name="message" rows="4" placeholder="Location, rough size, and what you imagine…"></textarea>
+            <p class="field-hint">A sentence or two is plenty to start.</p>
+          </div>
+          <button class="btn btn-primary btn-submit" type="submit" id="submitBtn">
+            <span class="btn-label">Request a Site Walk</span>
+            <svg class="btn-spinner" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M21 12a9 9 0 1 1-6.219-8.56"/></svg>
+          </button>
+          <p class="form-status" id="formStatus" role="status" aria-live="polite"></p>
+        </form>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+      <a class="nav-logo footer-logo" href="#top" aria-label="Back to top">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"/>
+          <path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"/>
+        </svg>
+        <span>Verdara</span>
+      </a>
+      <p class="footer-tag">Landscape design, build & stewardship.<br />Willamette Valley, Oregon.</p>
+      <div class="footer-cols">
+        <div>
+          <h4>Studio</h4>
+          <a href="#services">Services</a>
+          <a href="#process">Process</a>
+          <a href="#work">Selected work</a>
+        </div>
+        <div>
+          <h4>Contact</h4>
+          <a href="mailto:studio@verdara.example">studio@verdara.example</a>
+          <a href="tel:+15035550142">+1 (503) 555-0142</a>
+        </div>
+      </div>
+    </div>
+    <p class="footer-fine">© 2026 Verdara Landscape Studio. Grown, not built.</p>
+  </footer>
+
+  <script src="vendor/gsap.min.js"></script>
+  <script src="vendor/ScrollTrigger.min.js"></script>
+  <script type="module" src="main.js"></script>
+</body>
+</html>
