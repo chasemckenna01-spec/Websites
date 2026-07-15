@@ -45,3 +45,6 @@ yarn-error.log*
 *.db
 *.db-journal
 next-env.d.ts
+
+# scratch / local testing artifacts
+.scratch/
