@@ -32,7 +32,7 @@ const SCHOOL: FishConfig[] = [
     offsetX: 22,
     offsetY: -4,
     bobDuration: 2.1,
-    colorVar: "var(--color-secondary)",
+    colorVar: "#ffffff",
   },
   {
     stiffness: 80,
@@ -43,7 +43,7 @@ const SCHOOL: FishConfig[] = [
     offsetX: 44,
     offsetY: 16,
     bobDuration: 2.7,
-    colorVar: "var(--color-primary-light)",
+    colorVar: "#ffffff",
   },
   {
     stiffness: 50,
@@ -54,7 +54,7 @@ const SCHOOL: FishConfig[] = [
     offsetX: 64,
     offsetY: -18,
     bobDuration: 3.3,
-    colorVar: "var(--color-secondary)",
+    colorVar: "#ffffff",
   },
 ];
 
@@ -145,7 +145,12 @@ function FishFollower({
   return (
     <motion.div
       className="absolute left-0 top-0"
-      style={{ x, y }}
+      style={{
+        x,
+        y,
+        filter:
+          "drop-shadow(0 1px 2px rgba(12,31,43,0.35)) drop-shadow(0 2px 6px rgba(12,31,43,0.2))",
+      }}
       animate={{ opacity: active ? fish.opacity : 0 }}
       transition={{ duration: 0.5 }}
     >
