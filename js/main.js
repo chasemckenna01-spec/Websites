@@ -411,8 +411,8 @@
       }
 
       function frame() {
-        current.x += (target.x - current.x) * 0.12;
-        current.y += (target.y - current.y) * 0.12;
+        current.x += (target.x - current.x) * 0.06;
+        current.y += (target.y - current.y) * 0.06;
         crewGlow.style.transform = "translate3d(" + current.x + "px, " + current.y + "px, 0)";
         rafId = window.requestAnimationFrame(frame);
       }
