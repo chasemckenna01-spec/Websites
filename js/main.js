@@ -82,33 +82,11 @@
       );
     });
 
-    /* Hero entrance timeline */
-    var heroEls = document.querySelectorAll(".hero [data-reveal]");
-    if (heroEls.length) {
-      gsap.set(heroEls, { opacity: 0, y: 24 });
-      gsap.to(heroEls, {
-        opacity: 1,
-        y: 0,
-        duration: 0.9,
-        ease: "power2.out",
-        stagger: 0.12,
-        delay: 0.2
-      });
-    }
-
-    /* Subtle parallax on the hero sun glow only (decorative layer, never text) */
-    var heroSun = document.querySelector(".hero-sun");
-    if (heroSun) {
-      gsap.to(heroSun, {
-        yPercent: 12,
-        ease: "none",
-        scrollTrigger: {
-          trigger: ".hero",
-          start: "top top",
-          end: "bottom top",
-          scrub: 0.5
-        }
-      });
+    /* Eyebrow entrance above the scroll-expand hero */
+    var heroEyebrow = document.querySelector(".scroll-hero-content [data-reveal]");
+    if (heroEyebrow) {
+      gsap.set(heroEyebrow, { opacity: 0, y: 24 });
+      gsap.to(heroEyebrow, { opacity: 1, y: 0, duration: 0.9, ease: "power2.out", delay: 0.2 });
     }
   } else {
     var io = new IntersectionObserver(
@@ -123,6 +101,35 @@
       { threshold: 0.15 }
     );
     revealEls.forEach(function (el) { io.observe(el); });
+  }
+
+  /* ---------------------------------------------------------------------
+     Scroll-expand hero — the Blue Shaka video/photo grows as you scroll
+     through a pinned section, driven entirely by one CSS custom property
+     (--p, 0 to 1) so a single onUpdate call does all the work. --p
+     defaults to 1 in CSS, so with no JS, a blocked CDN, or reduced motion
+     the hero simply renders already "expanded" — never a broken collapsed
+     state. No wheel/touch hijacking: native scroll drives it both ways.
+  --------------------------------------------------------------------- */
+  var scrollHero = document.querySelector(".scroll-hero");
+  var scrollHeroPin = document.querySelector(".scroll-hero-pin");
+
+  if (scrollHero && scrollHeroPin && !prefersReducedMotion && window.gsap && window.ScrollTrigger) {
+    var isMobileHero = window.matchMedia("(max-width: 768px)").matches;
+
+    scrollHeroPin.style.setProperty("--p", 0);
+
+    ScrollTrigger.create({
+      trigger: scrollHero,
+      start: "top top",
+      end: "+=" + (isMobileHero ? 100 : 150) + "%",
+      scrub: 0.6,
+      pin: scrollHeroPin,
+      anticipatePin: 1,
+      onUpdate: function (self) {
+        scrollHeroPin.style.setProperty("--p", self.progress);
+      }
+    });
   }
 
   /* ---------------------------------------------------------------------

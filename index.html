@@ -64,44 +64,68 @@
 
 <main id="main">
 
-<!-- ============ HERO ============ -->
-<section class="hero" id="top">
-  <div class="hero-bg" aria-hidden="true">
-    <div class="hero-gradient"></div>
-    <svg class="hero-sun" viewBox="0 0 200 200" aria-hidden="true"><circle cx="100" cy="100" r="90"/></svg>
-    <div class="hero-fish" aria-hidden="true">
-      <svg viewBox="0 0 512 512" fill="currentColor"><path d="M497 208c-36-52-101-96-171-96-16 0-31 2-46 6 22-30 30-62 30-62s-70 4-118 52c-11-2-22-3-34-3C89 105 22 158 4 224c-3 10 5 19 15 16 27-8 56-12 85-12 8 0 16 0 24 1-31 26-52 61-58 100-2 11 9 19 19 13 44-26 86-58 116-98 12 4 24 9 35 15-14 33-17 70-8 106 3 11 17 14 24 5 26-33 44-72 51-113 45 6 90-4 128-30 9 24 25 46 46 62 9 7 21-1 19-12-7-40-27-75-56-100 26-3 51-11 74-24 9-5 9-18-1-22z"/></svg>
+<!-- ============ SCROLL-EXPAND HERO ============ -->
+<section class="scroll-hero" id="top">
+  <div class="scroll-hero-pin">
+    <div class="scroll-hero-bg" aria-hidden="true">
+      <img
+        src="assets/images/maui-coastline-1920.jpg"
+        srcset="assets/images/maui-coastline-900.jpg 900w, assets/images/maui-coastline-1920.jpg 1920w"
+        sizes="100vw"
+        alt=""
+        class="scroll-hero-bg-img"
+        width="1920" height="1281"
+        fetchpriority="high">
+      <div class="scroll-hero-bg-overlay"></div>
+    </div>
+
+    <div class="container scroll-hero-content">
+      <p class="hero-eyebrow" data-reveal>Māʻalaea Harbor · Maui, Hawaiʻi</p>
+
+      <div class="scroll-hero-media" id="scrollHeroMedia">
+        <video
+          class="scroll-hero-video"
+          poster="assets/images/blue-shaka-hero-poster.jpg"
+          autoplay muted loop playsinline preload="metadata"
+          aria-label="The Blue Shaka running offshore Maui waters">
+          <source src="assets/video/blue-shaka-hero.webm" type="video/webm">
+          <source src="assets/video/blue-shaka-hero.mp4" type="video/mp4">
+        </video>
+        <div class="scroll-hero-media-overlay"></div>
+      </div>
+
+      <h1 class="scroll-hero-title">
+        <span class="scroll-hero-title-word scroll-hero-title-left">Chase the Blue.</span>
+        <span class="scroll-hero-title-word scroll-hero-title-right">Land the Legend.</span>
+      </h1>
+
+      <a href="#experience" class="scroll-hero-cue" aria-label="Scroll to content">
+        <span>Scroll to Explore</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M12 4v16m0 0l-6-6m6 6l6-6"/></svg>
+      </a>
     </div>
   </div>
 
-  <div class="hero-waves" aria-hidden="true">
-    <svg viewBox="0 0 1440 160" preserveAspectRatio="none">
-      <path class="wave wave-back" d="M0,64 C240,128 480,0 720,32 C960,64 1200,128 1440,80 L1440,160 L0,160 Z"/>
-      <path class="wave wave-front" d="M0,96 C240,32 480,144 720,96 C960,48 1200,112 1440,64 L1440,160 L0,160 Z"/>
-    </svg>
-  </div>
-
-  <div class="container hero-inner">
-    <p class="hero-eyebrow" data-reveal>Māʻalaea Harbor · Maui, Hawaiʻi</p>
-    <h1 class="hero-title" data-reveal>
-      <span class="hero-title-line">Chase the Blue.</span>
-      <span class="hero-title-line hero-title-italic">Land the Legend.</span>
-    </h1>
-    <p class="hero-sub" data-reveal>Private sportfishing charters aboard the <em>Blue Shaka</em>, running Maui&rsquo;s deep offshore waters and rich reef grounds &mdash; captained by locals who know exactly where the fish are running.</p>
-    <div class="hero-actions" data-reveal>
-      <a href="#trips" class="btn btn-primary">View Trips &amp; Rates</a>
-      <a href="#contact" class="btn btn-ghost">Book a Charter</a>
+  <div class="scroll-hero-reveal">
+    <div class="container">
+      <p class="hero-sub" data-reveal>Private sportfishing charters aboard the <em>Blue Shaka</em>, running Maui&rsquo;s deep offshore waters and rich reef grounds &mdash; captained by locals who know exactly where the fish are running.</p>
+      <div class="hero-actions" data-reveal>
+        <a href="#trips" class="btn btn-primary">View Trips &amp; Rates</a>
+        <a href="#contact" class="btn btn-ghost">Book a Charter</a>
+      </div>
+      <dl class="hero-stats" data-reveal>
+        <div><dt>4&ndash;8</dt><dd>Hours on the water</dd></div>
+        <div><dt>100%</dt><dd>Private charters</dd></div>
+        <div><dt>2</dt><dd>Local crew, one boat</dd></div>
+      </dl>
     </div>
-    <dl class="hero-stats" data-reveal>
-      <div><dt>4&ndash;8</dt><dd>Hours on the water</dd></div>
-      <div><dt>100%</dt><dd>Private charters</dd></div>
-      <div><dt>2</dt><dd>Local crew, one boat</dd></div>
-    </dl>
+    <div class="hero-waves" aria-hidden="true">
+      <svg viewBox="0 0 1440 160" preserveAspectRatio="none">
+        <path class="wave wave-back" d="M0,64 C240,128 480,0 720,32 C960,64 1200,128 1440,80 L1440,160 L0,160 Z"/>
+        <path class="wave wave-front" d="M0,96 C240,32 480,144 720,96 C960,48 1200,112 1440,64 L1440,160 L0,160 Z"/>
+      </svg>
+    </div>
   </div>
-
-  <a href="#experience" class="scroll-cue" aria-label="Scroll to content">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 4v16m0 0l-6-6m6 6l6-6"/></svg>
-  </a>
 </section>
 
 <!-- ============ EXPERIENCE ============ -->
