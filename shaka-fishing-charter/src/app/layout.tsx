@@ -4,6 +4,7 @@ import Navbar from "@/components/navbar";
 import Footer from "@/components/footer";
 import { getCustomLogoSrc } from "@/lib/logo";
 import "./globals.css";
+import { cn } from "@/lib/utils";
 
 const fraunces = Fraunces({
   variable: "--font-fraunces",
@@ -47,7 +48,12 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${fraunces.variable} ${inter.variable} ${jetbrainsMono.variable} h-full antialiased`}
+      className={cn(
+        "h-full antialiased",
+        fraunces.variable,
+        inter.variable,
+        jetbrainsMono.variable
+      )}
     >
       <body className="min-h-full flex flex-col bg-foam text-ink">
         <a
