@@ -21,7 +21,8 @@ booking database and Stripe Checkout for deposits.
 
 ```bash
 npm install
-npm run db:seed   # seeds the three trip types into dev.db
+cp .env.example .env
+npm run db:setup   # creates dev.db (runs migrations) and seeds the three trip types
 npm run dev
 ```
 
