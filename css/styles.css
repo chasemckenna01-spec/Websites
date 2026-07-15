@@ -665,6 +665,8 @@ section h2 { font-size: var(--fs-h2); font-weight: 500; }
 .contact-details li { display: flex; align-items: center; gap: 0.85rem; font-size: 0.98rem; color: var(--color-ink); }
 .contact-details svg { width: 20px; height: 20px; color: var(--color-accent); flex-shrink: 0; }
 .contact-details a:hover { color: var(--color-accent); }
+.contact-detail-text { display: flex; flex-direction: column; gap: 0.1rem; }
+.contact-detail-text small { font-size: 0.76rem; color: var(--color-muted); text-transform: uppercase; letter-spacing: 0.06em; }
 
 .contact-form {
   background: var(--color-sand-50);
