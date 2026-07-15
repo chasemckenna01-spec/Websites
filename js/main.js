@@ -477,6 +477,47 @@
   }
 
   /* ---------------------------------------------------------------------
+     Contact section background video — plays once (no loop attribute) as
+     the section scrolls into view, then naturally rests on its last
+     frame. `.contact-bg-fallback` shows that same last frame as a still
+     image underneath, so prefers-reduced-motion users (video never
+     triggered) and everyone else land on an identical resting visual.
+  --------------------------------------------------------------------- */
+  var contactBgVideo = document.getElementById("contactBgVideo");
+  var contactSection = document.getElementById("contact");
+
+  if (contactBgVideo && contactSection && !prefersReducedMotion) {
+    var videoTriggered = false;
+
+    function playContactVideo() {
+      if (videoTriggered) return;
+      videoTriggered = true;
+      var playPromise = contactBgVideo.play();
+      if (playPromise && playPromise.then) {
+        playPromise
+          .then(function () { contactBgVideo.classList.add("is-playing"); })
+          .catch(function () { /* autoplay blocked; fallback still image stays visible */ });
+      } else {
+        contactBgVideo.classList.add("is-playing");
+      }
+    }
+
+    if (window.IntersectionObserver) {
+      var contactObserver = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            playContactVideo();
+            contactObserver.disconnect();
+          }
+        });
+      }, { threshold: 0.2 });
+      contactObserver.observe(contactSection);
+    } else {
+      playContactVideo();
+    }
+  }
+
+  /* ---------------------------------------------------------------------
      Contact form — front-end only submission handoff (no backend wired up)
   --------------------------------------------------------------------- */
   var form = document.getElementById("contactForm");
