@@ -371,6 +371,84 @@
   }
 
   /* ---------------------------------------------------------------------
+     Crew section — a single soft white glow that trails the cursor with
+     a bit of lag, instead of the fish school. Fades in/out at the
+     section edges, paused off-screen/hidden tab, skipped under
+     prefers-reduced-motion.
+  --------------------------------------------------------------------- */
+  var crewGlow = document.getElementById("crewGlow");
+
+  if (crewGlow && !prefersReducedMotion && window.requestAnimationFrame) {
+    (function initCrewGlow() {
+      var section = crewGlow.closest(".crew");
+      var target = { x: 0, y: 0 };
+      var current = { x: 0, y: 0 };
+      var active = false;
+      var rafId = null;
+      var running = false;
+      var initialized = false;
+
+      function onPointerMove(e) {
+        var rect = section.getBoundingClientRect();
+        var inside =
+          e.clientX >= rect.left && e.clientX <= rect.right &&
+          e.clientY >= rect.top && e.clientY <= rect.bottom;
+
+        if (inside) {
+          target.x = e.clientX - rect.left;
+          target.y = e.clientY - rect.top;
+          if (!active || !initialized) {
+            current.x = target.x;
+            current.y = target.y;
+            initialized = true;
+          }
+          active = true;
+          crewGlow.classList.add("is-active");
+        } else if (active) {
+          active = false;
+          crewGlow.classList.remove("is-active");
+        }
+      }
+
+      function frame() {
+        current.x += (target.x - current.x) * 0.12;
+        current.y += (target.y - current.y) * 0.12;
+        crewGlow.style.transform = "translate3d(" + current.x + "px, " + current.y + "px, 0)";
+        rafId = window.requestAnimationFrame(frame);
+      }
+
+      function start() {
+        if (running) return;
+        running = true;
+        rafId = window.requestAnimationFrame(frame);
+      }
+
+      function stop() {
+        running = false;
+        if (rafId) window.cancelAnimationFrame(rafId);
+        rafId = null;
+      }
+
+      window.addEventListener("pointermove", onPointerMove, { passive: true });
+
+      if (document.visibilityState !== "hidden") { start(); }
+
+      document.addEventListener("visibilitychange", function () {
+        if (document.hidden) { stop(); } else { start(); }
+      });
+
+      if (window.IntersectionObserver) {
+        var glowObserver = new IntersectionObserver(function (entries) {
+          entries.forEach(function (entry) {
+            if (entry.isIntersecting && !document.hidden) { start(); } else { stop(); }
+          });
+        }, { threshold: 0.05 });
+        glowObserver.observe(section);
+      }
+    })();
+  }
+
+  /* ---------------------------------------------------------------------
      Contact form — front-end only submission handoff (no backend wired up)
   --------------------------------------------------------------------- */
   var form = document.getElementById("contactForm");
