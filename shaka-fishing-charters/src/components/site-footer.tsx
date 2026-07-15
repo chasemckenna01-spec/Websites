@@ -1,5 +1,6 @@
 import Link from "next/link";
-import { Anchor, AtSign, Mail, MapPin, Phone } from "lucide-react";
+import Image from "next/image";
+import { AtSign, Mail, MapPin, Phone } from "lucide-react";
 import { business } from "@/lib/site-data";
 
 export function SiteFooter() {
@@ -8,7 +9,13 @@ export function SiteFooter() {
       <div className="mx-auto grid max-w-7xl gap-10 px-5 py-14 sm:px-8 md:grid-cols-[1.3fr_1fr_1fr]">
         <div>
           <div className="flex items-center gap-2 font-display text-lg font-semibold">
-            <Anchor className="h-5 w-5 text-secondary" strokeWidth={1.75} aria-hidden="true" />
+            <Image
+              src="/brand/logo-white.png"
+              alt=""
+              width={487}
+              height={461}
+              className="h-8 w-auto"
+            />
             <span>{business.name}</span>
           </div>
           <p className="mt-3 max-w-sm text-sm leading-relaxed text-white/70">

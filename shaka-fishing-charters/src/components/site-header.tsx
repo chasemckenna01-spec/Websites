@@ -1,10 +1,11 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { Menu, X, Anchor } from "lucide-react";
+import { Menu, X } from "lucide-react";
 import { business } from "@/lib/site-data";
 
 const navLinks = [
@@ -53,10 +54,13 @@ export function SiteHeader() {
           href="/"
           className="flex items-center gap-2 font-display text-lg font-semibold tracking-tight text-primary"
         >
-          <Anchor
-            className="h-5 w-5 text-accent"
-            strokeWidth={1.75}
-            aria-hidden="true"
+          <Image
+            src="/brand/logo.png"
+            alt=""
+            width={487}
+            height={461}
+            className="h-8 w-auto"
+            priority
           />
           <span>{business.shortName}</span>
         </Link>
