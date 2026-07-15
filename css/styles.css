@@ -792,25 +792,6 @@ section h2 { font-size: var(--fs-h2); font-weight: 500; }
 }
 
 /* ==========================================================================
-   Reviews
-   ========================================================================== */
-.review-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 1.75rem;
-}
-.review-card {
-  background: var(--color-surface);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-md);
-  padding: 2rem;
-  margin: 0;
-}
-.review-stars { color: var(--color-sunset-500); letter-spacing: 0.15em; margin-bottom: 1rem; font-size: 0.95rem; }
-.review-card blockquote { margin: 0 0 1.25rem; font-family: var(--font-display); font-style: italic; font-size: 1.08rem; color: var(--color-navy-900); line-height: 1.5; }
-.review-card figcaption { font-size: 0.85rem; color: var(--color-muted); }
-
-/* ==========================================================================
    Contact
    ========================================================================== */
 .contact { background: var(--color-surface); }
