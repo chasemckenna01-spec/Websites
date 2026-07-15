@@ -14,7 +14,7 @@ export const galleryItems: GalleryItem[] = [
     id: "g1",
     caption: "Mahi-mahi catch, offshore charter",
     category: "Catch",
-    gradient: "linear-gradient(135deg, #0c4a6e 0%, #0e7490 50%, #38bdf8 100%)",
+    gradient: "linear-gradient(135deg, #0c4a6e 0%, #0e7490 50%, #2dd4bf 100%)",
   },
   {
     id: "g2",
@@ -26,7 +26,7 @@ export const galleryItems: GalleryItem[] = [
     id: "g3",
     caption: "Full Day Experience — cooking the catch",
     category: "Sunset",
-    gradient: "linear-gradient(135deg, #7c2d12 0%, #ea580c 55%, #fb923c 100%)",
+    gradient: "linear-gradient(135deg, #831843 0%, #db2777 55%, #f9a8d4 100%)",
   },
   {
     id: "g4",
@@ -38,19 +38,19 @@ export const galleryItems: GalleryItem[] = [
     id: "g5",
     caption: "Ahi tuna, deep water run",
     category: "Catch",
-    gradient: "linear-gradient(135deg, #164e63 0%, #0891b2 50%, #67e8f9 100%)",
+    gradient: "linear-gradient(135deg, #164e63 0%, #0891b2 50%, #5eead4 100%)",
   },
   {
     id: "g6",
     caption: "Guide Casimiri rigging tackle",
     category: "Crew",
-    gradient: "linear-gradient(135deg, #0c4a6e 0%, #38bdf8 100%)",
+    gradient: "linear-gradient(135deg, #0c4a6e 0%, #2dd4bf 100%)",
   },
   {
     id: "g7",
     caption: "Sunset return to Lahaina Harbor",
     category: "Sunset",
-    gradient: "linear-gradient(135deg, #9a3412 0%, #ea580c 45%, #fbbf24 100%)",
+    gradient: "linear-gradient(135deg, #581c87 0%, #db2777 50%, #fbbf24 100%)",
   },
   {
     id: "g8",
@@ -62,6 +62,6 @@ export const galleryItems: GalleryItem[] = [
     id: "g9",
     caption: "Fresh catch, dinner service on deck",
     category: "Sunset",
-    gradient: "linear-gradient(135deg, #78350f 0%, #d97706 55%, #fcd34d 100%)",
+    gradient: "linear-gradient(135deg, #6b21a8 0%, #c026d3 55%, #fcd34d 100%)",
   },
 ];
