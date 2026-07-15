@@ -133,6 +133,34 @@
   }
 
   /* ---------------------------------------------------------------------
+     Our Waters — a pinned photo that clip-reveals from a centered inset
+     rectangle out to full-bleed while zooming out, recreated from a
+     framer-motion component using the same --p + ScrollTrigger pattern
+     as the hero above. Same fallback: --p defaults to 1 (fully revealed,
+     no zoom) so it's a normal photo section with no JS.
+  --------------------------------------------------------------------- */
+  var watersReveal = document.getElementById("watersReveal");
+  var watersRevealPin = document.getElementById("watersRevealPin");
+
+  if (watersReveal && watersRevealPin && !prefersReducedMotion && window.gsap && window.ScrollTrigger) {
+    var isMobileWaters = window.matchMedia("(max-width: 768px)").matches;
+
+    watersRevealPin.style.setProperty("--p", 0);
+
+    ScrollTrigger.create({
+      trigger: watersReveal,
+      start: "top top",
+      end: "+=" + (isMobileWaters ? 90 : 130) + "%",
+      scrub: 0.6,
+      pin: watersRevealPin,
+      anticipatePin: 1,
+      onUpdate: function (self) {
+        watersRevealPin.style.setProperty("--p", self.progress);
+      }
+    });
+  }
+
+  /* ---------------------------------------------------------------------
      Trips section — a small school of glowing "ember" fish drifting over
      the ocean-colored background, flocking (separation/alignment/cohesion)
      and scattering away from the cursor. Canvas-only, pointer-events:none,

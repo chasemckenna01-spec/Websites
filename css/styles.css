@@ -713,15 +713,20 @@ section h2 { font-size: var(--fs-h2); font-weight: 500; }
 /* ==========================================================================
    Our Waters
    ========================================================================== */
-.waters { background: var(--color-sand-100); }
-.waters-inner {
-  display: grid;
-  grid-template-columns: 1.1fr 0.9fr;
-  gap: clamp(2rem, 5vw, 5rem);
-  align-items: center;
+.waters { background: var(--color-sand-100); padding-bottom: 0; }
+.waters-copy {
+  max-width: 640px;
+  margin-inline: auto;
+  text-align: center;
+  padding-bottom: var(--space-2xl);
 }
 .waters-copy p { color: var(--color-ink-soft); margin-bottom: 1.5rem; font-size: 1.02rem; }
-.waters-list { display: flex; flex-direction: column; gap: 0.9rem; }
+.waters-list {
+  display: inline-flex;
+  flex-direction: column;
+  gap: 0.9rem;
+  text-align: left;
+}
 .waters-list li { padding-left: 1.6rem; position: relative; font-size: 0.95rem; color: var(--color-ink-soft); }
 .waters-list li::before {
   content: "";
@@ -733,17 +738,57 @@ section h2 { font-size: var(--fs-h2); font-weight: 500; }
 }
 .waters-list strong { color: var(--color-navy-900); }
 
-.waters-map { position: relative; text-align: center; color: var(--color-navy-900); }
-.islands-svg { width: 100%; max-width: 380px; }
-.chart-ring { fill: none; stroke: var(--color-ocean-600); stroke-opacity: 0.25; stroke-dasharray: 4 6; }
-.island-shapes { color: var(--color-navy-900); opacity: 0.92; }
-.trail-dots circle { fill: var(--color-sunset-600); }
-.waters-map-caption {
-  margin-top: 1rem;
-  font-size: 0.8rem;
-  letter-spacing: 0.08em;
+/* Full-bleed scroll-clip photo reveal — recreated natively (no React/
+   framer-motion) with the same technique as the hero: a single --p
+   (0–1) custom property drives clip-path + background-size, and GSAP
+   ScrollTrigger pins the section and scrubs --p on scroll. --p
+   defaults to 1 in CSS, so with no JS or reduced motion the photo just
+   renders fully revealed at rest instead of stuck in its clipped
+   starting state. */
+.waters-reveal {
+  position: relative;
+  width: 100vw;
+  margin-left: calc(50% - 50vw);
+  overflow: hidden;
+  background: var(--color-navy-950);
+}
+.waters-reveal-pin {
+  --p: 1;
+  position: relative;
+  height: 100vh;
+  overflow: hidden;
+}
+.waters-reveal-media {
+  position: absolute;
+  inset: 0;
+  background-image: url('../assets/images/waters-bay-700.jpg');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  transform: scale(calc(1.7 - var(--p) * 0.7));
+  clip-path: polygon(
+    calc(25% - var(--p) * 25%) calc(25% - var(--p) * 25%),
+    calc(75% + var(--p) * 25%) calc(25% - var(--p) * 25%),
+    calc(75% + var(--p) * 25%) calc(75% + var(--p) * 25%),
+    calc(25% - var(--p) * 25%) calc(75% + var(--p) * 25%)
+  );
+}
+@media (min-width: 700px) {
+  .waters-reveal-media { background-image: url('../assets/images/waters-bay-1342.jpg'); }
+}
+.waters-reveal-caption {
+  position: absolute;
+  z-index: 1;
+  left: 50%;
+  bottom: 2rem;
+  transform: translateX(-50%);
+  margin: 0;
+  color: rgba(255,255,255,0.9);
+  font-size: 0.78rem;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: var(--color-muted);
+  text-shadow: 0 2px 12px rgba(0,0,0,0.5);
+  opacity: var(--p);
 }
 
 /* ==========================================================================
@@ -852,9 +897,7 @@ section h2 { font-size: var(--fs-h2); font-weight: 500; }
 @media (max-width: 900px) {
   .main-nav { display: none; }
   .nav-toggle { display: flex; }
-  .waters-inner,
   .contact-inner { grid-template-columns: 1fr; }
-  .waters-map { order: -1; }
 }
 
 @media (max-width: 640px) {
