@@ -1,0 +1,10 @@
+{
+  "name": "websites",
+  "version": "1.0.0",
+  "description": "Websites built with Claude Code",
+  "private": true,
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  }
+}
