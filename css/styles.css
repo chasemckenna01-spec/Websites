@@ -552,12 +552,12 @@ section h2 { font-size: var(--fs-h2); font-weight: 500; }
   overflow: hidden;
   color: #fff;
   background:
-    radial-gradient(120% 70% at 50% -10%, rgba(56,182,201,0.22), transparent 60%),
-    linear-gradient(195deg, #0d3352 0%, #0a2c48 35%, #072138 70%, #061b2e 100%);
+    radial-gradient(120% 70% at 50% -10%, rgba(94, 234, 212, 0.4), transparent 60%),
+    linear-gradient(195deg, #1a94b0 0%, #157a9c 35%, #106389 70%, #0c4f70 100%);
 }
 .trips .eyebrow { color: var(--color-sunset-400); }
 .trips h2 { color: #fff; }
-.trips .section-lede { color: rgba(255,255,255,0.65); }
+.trips .section-lede { color: rgba(255,255,255,0.88); }
 
 .trips-fish-canvas {
   position: absolute;
@@ -580,8 +580,8 @@ section h2 { font-size: var(--fs-h2); font-weight: 500; }
 
 .trip-card {
   position: relative;
-  background: rgba(255,255,255,0.04);
-  border: 1px solid rgba(255,255,255,0.12);
+  background: rgba(8,35,48,0.28);
+  border: 1px solid rgba(255,255,255,0.22);
   border-radius: var(--radius-lg);
   padding: 2.25rem 2rem;
   display: flex;
@@ -591,12 +591,12 @@ section h2 { font-size: var(--fs-h2); font-weight: 500; }
 }
 .trip-card:hover {
   transform: translateY(-8px);
-  border-color: rgba(255,255,255,0.3);
-  background: rgba(255,255,255,0.07);
+  border-color: rgba(255,255,255,0.38);
+  background: rgba(8,35,48,0.38);
 }
 .trip-card-featured {
-  background: linear-gradient(165deg, rgba(232,129,63,0.16), rgba(255,255,255,0.05));
-  border-color: rgba(232,129,63,0.45);
+  background: linear-gradient(165deg, rgba(232,129,63,0.22), rgba(8,35,48,0.32));
+  border-color: rgba(232,129,63,0.5);
 }
 .trip-badge {
   position: absolute;
@@ -612,12 +612,12 @@ section h2 { font-size: var(--fs-h2); font-weight: 500; }
   border-radius: 999px;
 }
 .trip-card-head h3 { color: #fff; font-size: 1.3rem; margin-bottom: 0.35rem; }
-.trip-duration { color: var(--color-ocean-400); font-size: 0.85rem; font-weight: 600; letter-spacing: 0.02em; }
+.trip-duration { color: #eafcff; font-size: 0.85rem; font-weight: 600; letter-spacing: 0.02em; }
 .trip-price { display: flex; align-items: baseline; gap: 0.5rem; }
 .trip-price span { font-family: var(--font-display); font-size: 2.5rem; color: var(--color-sunset-400); }
-.trip-price small { color: rgba(255,255,255,0.55); font-size: 0.82rem; }
-.trip-desc { color: rgba(255,255,255,0.75); font-size: 0.95rem; flex-grow: 1; }
-.trip-includes { display: flex; flex-direction: column; gap: 0.5rem; font-size: 0.88rem; color: rgba(255,255,255,0.75); }
+.trip-price small { color: rgba(255,255,255,0.75); font-size: 0.82rem; }
+.trip-desc { color: rgba(255,255,255,0.88); font-size: 0.95rem; flex-grow: 1; }
+.trip-includes { display: flex; flex-direction: column; gap: 0.5rem; font-size: 0.88rem; color: rgba(255,255,255,0.88); }
 .trip-includes li { padding-left: 1.4rem; position: relative; }
 .trip-includes li::before {
   content: "";
@@ -634,7 +634,7 @@ section h2 { font-size: var(--fs-h2); font-weight: 500; }
 .trip-note {
   margin-top: 2.25rem;
   font-size: 0.82rem;
-  color: rgba(255,255,255,0.45);
+  color: rgba(255,255,255,0.68);
   max-width: 60ch;
 }
 
