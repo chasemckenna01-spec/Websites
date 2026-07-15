@@ -547,10 +547,29 @@ section h2 { font-size: var(--fs-h2); font-weight: 500; }
 /* ==========================================================================
    Trips & Rates
    ========================================================================== */
-.trips { background: var(--color-navy-950); color: #fff; }
+.trips {
+  position: relative;
+  overflow: hidden;
+  color: #fff;
+  background:
+    radial-gradient(120% 70% at 50% -10%, rgba(56,182,201,0.22), transparent 60%),
+    linear-gradient(195deg, #0d3352 0%, #0a2c48 35%, #072138 70%, #061b2e 100%);
+}
 .trips .eyebrow { color: var(--color-sunset-400); }
 .trips h2 { color: #fff; }
 .trips .section-lede { color: rgba(255,255,255,0.65); }
+
+.trips-fish-canvas {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.trips > .container {
+  position: relative;
+  z-index: 1;
+}
 
 .trip-grid {
   display: grid;

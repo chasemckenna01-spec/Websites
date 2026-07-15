@@ -133,6 +133,244 @@
   }
 
   /* ---------------------------------------------------------------------
+     Trips section — a small school of glowing "ember" fish drifting over
+     the ocean-colored background, flocking (separation/alignment/cohesion)
+     and scattering away from the cursor. Canvas-only, pointer-events:none,
+     paused off-screen and on a hidden tab. Skipped entirely under
+     prefers-reduced-motion — the ocean gradient alone still reads fine.
+  --------------------------------------------------------------------- */
+  var fishCanvas = document.getElementById("tripsFishCanvas");
+
+  if (fishCanvas && !prefersReducedMotion && window.requestAnimationFrame) {
+    (function initFishSchool() {
+      var section = fishCanvas.closest(".trips");
+      var ctx = fishCanvas.getContext("2d");
+      var dpr = Math.min(window.devicePixelRatio || 1, 2);
+      var width = 0;
+      var height = 0;
+      var fish = [];
+      var rafId = null;
+      var running = false;
+      var isMobile = window.matchMedia("(max-width: 768px)").matches;
+      var COUNT = isMobile ? 22 : 42;
+      var MAX_SPEED = 1.5;
+      var MAX_FORCE = 0.045;
+      var NEIGHBOR_R = 68;
+      var SEPARATION_R = 24;
+      var POINTER_R = 130;
+      var POINTER_FORCE = 1.1;
+
+      var pointer = { x: -9999, y: -9999, active: false };
+      var idleTimer = null;
+
+      function makeGlowSprite() {
+        var size = 64;
+        var c = document.createElement("canvas");
+        c.width = c.height = size;
+        var gctx = c.getContext("2d");
+        var r = size / 2;
+        var grad = gctx.createRadialGradient(r, r, 0, r, r, r);
+        grad.addColorStop(0, "rgba(255,255,255,0.95)");
+        grad.addColorStop(0.35, "rgba(224,240,245,0.55)");
+        grad.addColorStop(1, "rgba(224,240,245,0)");
+        gctx.fillStyle = grad;
+        gctx.beginPath();
+        gctx.arc(r, r, r, 0, Math.PI * 2);
+        gctx.fill();
+        return c;
+      }
+      var sprite = makeGlowSprite();
+
+      function rand(min, max) { return min + Math.random() * (max - min); }
+
+      function resize() {
+        width = section.clientWidth;
+        height = section.clientHeight;
+        fishCanvas.width = width * dpr;
+        fishCanvas.height = height * dpr;
+        fishCanvas.style.width = width + "px";
+        fishCanvas.style.height = height + "px";
+        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      }
+
+      function seed() {
+        fish = [];
+        for (var i = 0; i < COUNT; i++) {
+          var angle = rand(0, Math.PI * 2);
+          fish.push({
+            x: rand(0, width),
+            y: rand(0, height),
+            vx: Math.cos(angle) * 0.4,
+            vy: Math.sin(angle) * 0.4,
+            size: rand(1.6, 3.4),
+            wander: rand(0, Math.PI * 2),
+            twinkle: rand(0, Math.PI * 2)
+          });
+        }
+      }
+
+      function limitVec(v, max) {
+        var magSq = v.x * v.x + v.y * v.y;
+        if (magSq > max * max && magSq > 0) {
+          var mag = Math.sqrt(magSq);
+          v.x = (v.x / mag) * max;
+          v.y = (v.y / mag) * max;
+        }
+        return v;
+      }
+
+      function step() {
+        for (var i = 0; i < fish.length; i++) {
+          var f = fish[i];
+          var sepX = 0, sepY = 0;
+          var aliX = 0, aliY = 0;
+          var cohX = 0, cohY = 0;
+          var neighborCount = 0;
+
+          for (var j = 0; j < fish.length; j++) {
+            if (i === j) continue;
+            var o = fish[j];
+            var dx = f.x - o.x;
+            var dy = f.y - o.y;
+            var d = Math.sqrt(dx * dx + dy * dy);
+            if (d > 0 && d < NEIGHBOR_R) {
+              if (d < SEPARATION_R) {
+                sepX += dx / d;
+                sepY += dy / d;
+              }
+              aliX += o.vx;
+              aliY += o.vy;
+              cohX += o.x;
+              cohY += o.y;
+              neighborCount++;
+            }
+          }
+
+          var ax = 0, ay = 0;
+
+          if (neighborCount > 0) {
+            aliX /= neighborCount; aliY /= neighborCount;
+            cohX = cohX / neighborCount - f.x;
+            cohY = cohY / neighborCount - f.y;
+            ax += sepX * 1.6 + aliX * 0.9 + cohX * 0.01;
+            ay += sepY * 1.6 + aliY * 0.9 + cohY * 0.01;
+          }
+
+          /* gentle organic wander so motion never looks mechanical */
+          f.wander += rand(-0.3, 0.3);
+          ax += Math.cos(f.wander) * 0.04;
+          ay += Math.sin(f.wander) * 0.04;
+
+          /* scatter away from the cursor, stronger the closer it gets */
+          if (pointer.active) {
+            var pdx = f.x - pointer.x;
+            var pdy = f.y - pointer.y;
+            var pd = Math.sqrt(pdx * pdx + pdy * pdy);
+            if (pd < POINTER_R && pd > 0) {
+              var strength = (1 - pd / POINTER_R) * POINTER_FORCE;
+              ax += (pdx / pd) * strength;
+              ay += (pdy / pd) * strength;
+            }
+          }
+
+          var steer = limitVec({ x: ax, y: ay }, MAX_FORCE);
+          f.vx += steer.x * 0.6;
+          f.vy += steer.y * 0.6;
+          var vel = limitVec({ x: f.vx, y: f.vy }, MAX_SPEED);
+          f.vx = vel.x;
+          f.vy = vel.y;
+
+          f.x += f.vx;
+          f.y += f.vy;
+
+          /* wrap at the edges so the school keeps flowing */
+          if (f.x < -20) f.x = width + 20;
+          if (f.x > width + 20) f.x = -20;
+          if (f.y < -20) f.y = height + 20;
+          if (f.y > height + 20) f.y = -20;
+        }
+      }
+
+      function draw() {
+        ctx.clearRect(0, 0, width, height);
+        ctx.globalCompositeOperation = "lighter";
+        for (var i = 0; i < fish.length; i++) {
+          var f = fish[i];
+          f.twinkle += 0.03;
+          var alpha = 0.55 + Math.sin(f.twinkle) * 0.35;
+          var s = f.size * 7;
+          ctx.globalAlpha = Math.max(0.15, alpha);
+          ctx.drawImage(sprite, f.x - s / 2, f.y - s / 2, s, s);
+        }
+        ctx.globalAlpha = 1;
+        ctx.globalCompositeOperation = "source-over";
+      }
+
+      function frame() {
+        step();
+        draw();
+        rafId = window.requestAnimationFrame(frame);
+      }
+
+      function start() {
+        if (running) return;
+        running = true;
+        rafId = window.requestAnimationFrame(frame);
+      }
+
+      function stop() {
+        running = false;
+        if (rafId) window.cancelAnimationFrame(rafId);
+        rafId = null;
+      }
+
+      function updatePointer(clientX, clientY) {
+        var rect = section.getBoundingClientRect();
+        pointer.x = clientX - rect.left;
+        pointer.y = clientY - rect.top;
+        pointer.active = true;
+        clearTimeout(idleTimer);
+        idleTimer = setTimeout(function () { pointer.active = false; }, 2500);
+      }
+
+      window.addEventListener("pointermove", function (e) {
+        updatePointer(e.clientX, e.clientY);
+      }, { passive: true });
+
+      window.addEventListener("resize", function () {
+        isMobile = window.matchMedia("(max-width: 768px)").matches;
+        resize();
+      });
+
+      if (window.ResizeObserver) {
+        new ResizeObserver(resize).observe(section);
+      }
+
+      resize();
+      seed();
+
+      if (document.visibilityState === "hidden") {
+        /* leave stopped until visible */
+      } else {
+        start();
+      }
+
+      document.addEventListener("visibilitychange", function () {
+        if (document.hidden) { stop(); } else { start(); }
+      });
+
+      if (window.IntersectionObserver) {
+        var sectionObserver = new IntersectionObserver(function (entries) {
+          entries.forEach(function (entry) {
+            if (entry.isIntersecting && !document.hidden) { start(); } else { stop(); }
+          });
+        }, { threshold: 0.05 });
+        sectionObserver.observe(section);
+      }
+    })();
+  }
+
+  /* ---------------------------------------------------------------------
      Contact form — front-end only submission handoff (no backend wired up)
   --------------------------------------------------------------------- */
   var form = document.getElementById("contactForm");
