@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { ArrowRight, Anchor, Fish, ShieldCheck } from "lucide-react";
-import { OceanScene } from "@/components/decor/ocean-scene";
+import ScrollExpandMedia from "@/components/ui/scroll-expansion-hero";
 import { SectionHeading } from "@/components/section-heading";
 import { TripCard } from "@/components/trip-card";
 import { Reveal, StaggerGroup, StaggerItem } from "@/components/motion/reveal";
@@ -9,24 +9,24 @@ import { business, testimonials, tripTypes } from "@/lib/site-data";
 export default function HomePage() {
   return (
     <>
-      <section className="relative flex min-h-[92vh] items-end overflow-hidden">
-        <OceanScene />
-
-        <div className="relative z-10 mx-auto w-full max-w-7xl px-5 pb-20 pt-40 sm:px-8 sm:pb-28">
-          <p className="text-sm font-semibold uppercase tracking-[0.3em] text-secondary">
-            {business.location.island}
-          </p>
-          <h1 className="mt-4 max-w-3xl font-display text-5xl font-semibold leading-[1.05] text-balance text-white sm:text-6xl md:text-7xl">
-            {business.tagline}
-          </h1>
-          <p className="mt-6 max-w-xl text-lg leading-relaxed text-white/85">
+      <ScrollExpandMedia
+        mediaType="video"
+        mediaSrc="/media/hero-video.mp4"
+        posterSrc="/media/hero-poster.jpg"
+        bgImageSrc="/media/hero-bg.jpg"
+        title={business.tagline}
+        date={business.location.island}
+        scrollToExpand="Scroll to Explore"
+      >
+        <div className="mx-auto max-w-2xl text-center">
+          <p className="text-lg leading-relaxed text-foreground/90">
             Private sportfishing charters departing {business.location.marina} with Captain{" "}
             {business.captain.name} and Fishing Guide {business.guide.name}. Half-day runs,
             full-day blue water hunts, or a full day on the water that ends with dinner
             you caught yourself.
           </p>
 
-          <div className="mt-9 flex flex-col gap-3 sm:flex-row sm:items-center">
+          <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-center">
             <Link
               href="/trips"
               className="inline-flex min-h-[44px] cursor-pointer items-center justify-center gap-2 rounded-full bg-accent px-7 py-3.5 text-base font-semibold text-white shadow-lg shadow-accent/20 transition-all duration-200 hover:bg-accent-light active:scale-[0.98]"
@@ -36,13 +36,13 @@ export default function HomePage() {
             </Link>
             <Link
               href="/about"
-              className="inline-flex min-h-[44px] cursor-pointer items-center justify-center rounded-full border border-white/30 px-7 py-3.5 text-base font-semibold text-white backdrop-blur-sm transition-all duration-200 hover:bg-white/10"
+              className="inline-flex min-h-[44px] cursor-pointer items-center justify-center rounded-full border border-primary/20 px-7 py-3.5 text-base font-semibold text-primary transition-all duration-200 hover:bg-muted"
             >
               Meet the Crew
             </Link>
           </div>
         </div>
-      </section>
+      </ScrollExpandMedia>
 
       <section className="border-b border-border bg-surface">
         <div className="mx-auto grid max-w-7xl grid-cols-1 divide-y divide-border px-5 sm:grid-cols-3 sm:divide-x sm:divide-y-0 sm:px-8">

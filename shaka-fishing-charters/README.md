@@ -8,6 +8,9 @@ booking database and Stripe Checkout for deposits.
 
 - **Next.js 16** (App Router, Turbopack, React 19)
 - **Tailwind CSS 4** — design tokens in `src/app/globals.css`
+- **shadcn-style component structure** — `components.json` + `src/components/ui/`
+  for drop-in components, `src/lib/utils.ts` exports `cn()`. No shadcn
+  components have been added via the CLI yet; the convention is just in place.
 - **Framer Motion** — scroll reveals, page/menu transitions, all `prefers-reduced-motion`-aware
 - **Prisma 7 + SQLite** (`@prisma/adapter-better-sqlite3`) — trip types, bookings, blocked dates
 - **Stripe Checkout** — deposit collection
@@ -55,10 +58,45 @@ invented content standing in for the real thing:
   tiles as stand-ins for real photography. Once you have photos, add them to
   `/public/gallery` and swap `gallery-grid.tsx` to render `next/image` instead
   of the `gradient` style
-- **`src/components/decor/ocean-scene.tsx`** — the hero background is an
-  animated CSS/SVG ocean scene (waves + sun glow), used in place of real drone
-  or on-water video/photography. Swap for a full-bleed video or photo hero
-  once footage is available.
+- **`src/components/decor/ocean-scene.tsx`** — still used as the About page
+  hero background (animated CSS/SVG ocean scene). The Home page now uses real
+  media (see below); consider swapping About's hero too once you have more
+  footage.
+- **`public/media/hero-video.mp4`** — an AI-generated placeholder charter-boat
+  clip (Veo 3), not real footage of Chase's actual boat. Swap for real
+  on-water video when available (see "Home hero" below for the pipeline).
+
+## Home hero: scroll-expansion media
+
+The homepage hero (`src/components/ui/scroll-expansion-hero.tsx`, used in
+`src/app/page.tsx`) is a `ScrollExpandMedia` component: a small video card
+grows to full-bleed as the visitor scrolls, then releases scroll control to
+the rest of the page. It's a client component with its own `wheel`/`touch`
+handling — it temporarily hijacks scroll on the homepage until the media
+finishes expanding, which is intentional but worth knowing if you add more
+sections above it.
+
+Assets used, all under `public/media/`:
+
+- `hero-bg.jpg` — your uploaded aerial beach photo (Makena/Big Beach), shown
+  behind the video card and fades out as it expands
+- `hero-video.mp4` — the AI-generated boat clip, transcoded from the
+  originally-uploaded HEVC `.mov` to H.264 for cross-browser `<video>` support
+  (Chrome/Firefox don't reliably play HEVC or `.mov` containers)
+- `hero-poster.jpg` — first frame of the video, extracted with `ffmpeg`, shown
+  while the video loads
+
+To swap in real footage later: replace these three files (same filenames) or
+update the `mediaSrc` / `posterSrc` / `bgImageSrc` props in `page.tsx`. If a
+future video isn't already H.264 MP4, transcode it first — most non-MP4
+formats (especially HEVC-in-`.mov`, common from iPhones and some AI video
+tools) won't play in Chrome/Firefox's `<video>` tag:
+
+```bash
+ffmpeg -i input.mov -an -c:v libx264 -pix_fmt yuv420p -crf 20 -preset slow \
+  -movflags +faststart public/media/hero-video.mp4
+ffmpeg -i public/media/hero-video.mp4 -vframes 1 -update 1 -q:v 2 public/media/hero-poster.jpg
+```
 
 ## Booking system design notes
 
