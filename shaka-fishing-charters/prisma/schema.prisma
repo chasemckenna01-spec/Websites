@@ -1,0 +1,59 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "sqlite"
+}
+
+// NOTE: This schema assumes a single boat / single daily trip slot, matching
+// a small two-person crew (captain + guide). One CONFIRMED or DEPOSIT_PAID
+// booking occupies the whole day regardless of trip type.
+
+model TripType {
+  id            String    @id @default(cuid())
+  slug          String    @unique
+  name          String
+  durationHours Int
+  priceCents    Int
+  maxGuests     Int
+  bookings      Booking[]
+}
+
+enum BookingStatus {
+  PENDING
+  DEPOSIT_PAID
+  CONFIRMED
+  CANCELLED
+}
+
+model Booking {
+  id                     String        @id @default(cuid())
+  tripType               TripType      @relation(fields: [tripTypeId], references: [id])
+  tripTypeId             String
+  date                   DateTime
+  guests                 Int
+  customerName           String
+  customerEmail          String
+  customerPhone          String
+  notes                  String?
+  status                 BookingStatus @default(PENDING)
+  totalCents             Int
+  depositCents           Int
+  stripeSessionId        String?       @unique
+  stripePaymentIntentId  String?
+  createdAt              DateTime      @default(now())
+  updatedAt              DateTime      @updatedAt
+
+  @@index([date])
+}
+
+model BlockedDate {
+  id     String  @id @default(cuid())
+  date   DateTime @unique
+  reason String?
+}
