@@ -1,0 +1,91 @@
+@import "tailwindcss";
+
+:root {
+  /* Brand palette — grounded in the Shaka Fishing Charter marlin mark */
+  --color-ink: #0a1b2c;         /* Deep Current: near-black navy, dark sections */
+  --color-marlin: #1b3a5c;      /* Marlin Navy: primary brand color */
+  --color-marlin-deep: #142c46; /* darker navy for gradients / hover */
+  --color-lagoon: #2fa89f;      /* Lagoon Teal: secondary accent */
+  --color-gold: #d9a441;        /* Shaka Gold: CTA + price highlight */
+  --color-gold-bright: #f0be63;
+  --color-foam: #f6f8f8;        /* Foam White: light surface */
+  --color-foam-dim: #eaeff0;
+  --color-mist: #7c93a6;        /* muted text on dark surfaces */
+  --color-line: #d7e0e4;        /* hairline borders on light surfaces */
+
+  --font-display: var(--font-fraunces);
+  --font-body: var(--font-inter);
+  --font-mono: var(--font-jetbrains-mono);
+
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in: cubic-bezier(0.7, 0, 0.84, 0);
+}
+
+@theme inline {
+  --color-ink: var(--color-ink);
+  --color-marlin: var(--color-marlin);
+  --color-marlin-deep: var(--color-marlin-deep);
+  --color-lagoon: var(--color-lagoon);
+  --color-gold: var(--color-gold);
+  --color-gold-bright: var(--color-gold-bright);
+  --color-foam: var(--color-foam);
+  --color-foam-dim: var(--color-foam-dim);
+  --color-mist: var(--color-mist);
+  --color-line: var(--color-line);
+
+  --font-display: var(--font-display);
+  --font-body: var(--font-body);
+  --font-mono: var(--font-mono);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+body {
+  background: var(--color-foam);
+  color: var(--color-ink);
+  font-family: var(--font-body), ui-sans-serif, system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+::selection {
+  background: var(--color-gold);
+  color: var(--color-ink);
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-gold);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+.text-balance {
+  text-wrap: balance;
+}
+
+.font-display {
+  font-family: var(--font-display), Georgia, serif;
+}
+
+.font-mono {
+  font-family: var(--font-mono), ui-monospace, monospace;
+}
+
+.tabular-nums {
+  font-variant-numeric: tabular-nums;
+}
