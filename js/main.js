@@ -446,22 +446,42 @@
   });
 
   /* ---------------------------------------------------------------------
-     Crew section — a single soft white glow that trails the cursor with
-     a bit of lag, instead of the fish school. Fades in/out at the
-     section edges, paused off-screen/hidden tab, skipped under
-     prefers-reduced-motion.
+     Crew section — a comet-style trail of small white glows that chase
+     the cursor, each dot lagging behind the one ahead of it, instead of
+     the fish school. Fades in/out at the section edges, paused
+     off-screen/hidden tab, skipped under prefers-reduced-motion.
   --------------------------------------------------------------------- */
-  var crewGlow = document.getElementById("crewGlow");
+  var crewGlowTrail = document.getElementById("crewGlowTrail");
 
-  if (crewGlow && !prefersReducedMotion && window.requestAnimationFrame) {
-    (function initCrewGlow() {
-      var section = crewGlow.closest(".crew");
+  if (crewGlowTrail && !prefersReducedMotion && window.requestAnimationFrame) {
+    (function initCrewGlowTrail() {
+      var DOT_COUNT = 7;
+      var LEAD_SIZE = 130;
+      var TAIL_SIZE = 34;
+      var LEAD_LERP = 0.16;
+      var TAIL_LERP = 0.24;
+
+      var section = crewGlowTrail.closest(".crew");
       var target = { x: 0, y: 0 };
-      var current = { x: 0, y: 0 };
       var active = false;
       var rafId = null;
       var running = false;
       var initialized = false;
+      var dots = [];
+
+      for (var i = 0; i < DOT_COUNT; i++) {
+        var t = i / (DOT_COUNT - 1);
+        var size = LEAD_SIZE - (LEAD_SIZE - TAIL_SIZE) * t;
+        var el = document.createElement("div");
+        el.className = "crew-glow-dot";
+        el.style.width = size + "px";
+        el.style.height = size + "px";
+        el.style.marginLeft = (-size / 2) + "px";
+        el.style.marginTop = (-size / 2) + "px";
+        el.style.setProperty("--dot-opacity", (1 - t * 0.75).toFixed(2));
+        crewGlowTrail.appendChild(el);
+        dots.push({ el: el, x: 0, y: 0, lerp: i === 0 ? LEAD_LERP : TAIL_LERP });
+      }
 
       function onPointerMove(e) {
         var rect = section.getBoundingClientRect();
@@ -473,22 +493,31 @@
           target.x = e.clientX - rect.left;
           target.y = e.clientY - rect.top;
           if (!active || !initialized) {
-            current.x = target.x;
-            current.y = target.y;
+            for (var i = 0; i < dots.length; i++) {
+              dots[i].x = target.x;
+              dots[i].y = target.y;
+            }
             initialized = true;
           }
           active = true;
-          crewGlow.classList.add("is-active");
+          crewGlowTrail.classList.add("is-active");
+          for (var j = 0; j < dots.length; j++) { dots[j].el.classList.add("is-active"); }
         } else if (active) {
           active = false;
-          crewGlow.classList.remove("is-active");
+          crewGlowTrail.classList.remove("is-active");
+          for (var k = 0; k < dots.length; k++) { dots[k].el.classList.remove("is-active"); }
         }
       }
 
       function frame() {
-        current.x += (target.x - current.x) * 0.06;
-        current.y += (target.y - current.y) * 0.06;
-        crewGlow.style.transform = "translate3d(" + current.x + "px, " + current.y + "px, 0)";
+        var leadTarget = target;
+        for (var i = 0; i < dots.length; i++) {
+          var dot = dots[i];
+          dot.x += (leadTarget.x - dot.x) * dot.lerp;
+          dot.y += (leadTarget.y - dot.y) * dot.lerp;
+          dot.el.style.transform = "translate3d(" + dot.x + "px, " + dot.y + "px, 0)";
+          leadTarget = dot;
+        }
         rafId = window.requestAnimationFrame(frame);
       }
 
