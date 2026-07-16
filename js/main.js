@@ -462,12 +462,14 @@
       var TAIL_LERP = 0.24;
 
       var section = crewGlowTrail.closest(".crew");
+      var hasFinePointer = !window.matchMedia || window.matchMedia("(hover: hover) and (pointer: fine)").matches;
       var target = { x: 0, y: 0 };
       var active = false;
       var rafId = null;
       var running = false;
       var initialized = false;
       var dots = [];
+      var driftT = 0;
 
       for (var i = 0; i < DOT_COUNT; i++) {
         var t = i / (DOT_COUNT - 1);
@@ -510,6 +512,20 @@
       }
 
       function frame() {
+        if (!hasFinePointer) {
+          driftT += 0.006;
+          var rect = section.getBoundingClientRect();
+          var visibleTop = Math.max(rect.top, 0);
+          var visibleBottom = Math.min(rect.bottom, window.innerHeight || rect.bottom);
+          var visibleHeight = Math.max(visibleBottom - visibleTop, 1);
+          var cx = rect.width / 2;
+          var cy = (visibleTop - rect.top) + visibleHeight / 2;
+          var rx = Math.max(rect.width * 0.28, 40);
+          var ry = Math.max(visibleHeight * 0.22, 24);
+          target.x = cx + Math.cos(driftT) * rx;
+          target.y = cy + Math.sin(driftT * 1.6) * ry;
+        }
+
         var leadTarget = target;
         for (var i = 0; i < dots.length; i++) {
           var dot = dots[i];
@@ -533,7 +549,21 @@
         rafId = null;
       }
 
-      window.addEventListener("pointermove", onPointerMove, { passive: true });
+      if (hasFinePointer) {
+        window.addEventListener("pointermove", onPointerMove, { passive: true });
+      } else {
+        var rect0 = section.getBoundingClientRect();
+        var visTop0 = Math.max(rect0.top, 0);
+        var visBottom0 = Math.min(rect0.bottom, window.innerHeight || rect0.bottom);
+        target.x = rect0.width / 2;
+        target.y = (visTop0 - rect0.top) + Math.max(visBottom0 - visTop0, 1) / 2;
+        for (var d = 0; d < dots.length; d++) {
+          dots[d].x = target.x;
+          dots[d].y = target.y;
+          dots[d].el.classList.add("is-active");
+        }
+        crewGlowTrail.classList.add("is-active");
+      }
 
       if (document.visibilityState !== "hidden") { start(); }
 
