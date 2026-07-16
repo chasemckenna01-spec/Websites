@@ -487,16 +487,6 @@ p { margin: 0; }
   letter-spacing: 0.02em;
 }
 
-.hero-waves {
-  position: relative;
-  z-index: 2;
-  line-height: 0;
-  margin-top: 3.5rem;
-}
-.hero-waves svg { width: 100%; height: clamp(70px, 10vw, 160px); display: block; }
-.wave-back { fill: rgba(250, 246, 238, 0.35); }
-.wave-front { fill: var(--color-bg); }
-
 /* ==========================================================================
    Section shared
    ========================================================================== */
