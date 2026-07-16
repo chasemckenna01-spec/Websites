@@ -541,21 +541,33 @@ section h2 { font-size: var(--fs-h2); font-weight: 500; }
 /* ==========================================================================
    Experience / Feature grid
    ========================================================================== */
+.experience {
+  position: relative;
+  overflow: hidden;
+  color: #fff;
+  background:
+    radial-gradient(120% 70% at 50% -10%, rgba(94, 234, 212, 0.4), transparent 60%),
+    linear-gradient(195deg, #1a94b0 0%, #157a9c 35%, #106389 70%, #0c4f70 100%);
+}
+.experience .eyebrow { color: var(--color-sunset-400); }
+.experience h2 { color: #fff; }
+
 .feature-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
   gap: 1.75rem;
 }
 .feature-card {
-  background: var(--color-surface);
-  border: 1px solid var(--color-border);
+  background: rgba(8,35,48,0.28);
+  border: 1px solid rgba(255,255,255,0.22);
   border-radius: var(--radius-md);
   padding: 2rem 1.75rem;
-  transition: transform var(--dur-med) var(--ease-out), box-shadow var(--dur-med) var(--ease-out);
+  transition: transform var(--dur-med) var(--ease-out), border-color var(--dur-med) var(--ease-out), background-color var(--dur-med) var(--ease-out);
 }
 .feature-card:hover {
   transform: translateY(-6px);
-  box-shadow: 0 20px 40px -20px rgba(11, 42, 69, 0.25);
+  border-color: rgba(255,255,255,0.38);
+  background: rgba(8,35,48,0.38);
 }
 .feature-icon {
   display: inline-flex;
@@ -569,8 +581,8 @@ section h2 { font-size: var(--fs-h2); font-weight: 500; }
   margin-bottom: 1.25rem;
 }
 .feature-icon svg { width: 24px; height: 24px; }
-.feature-card h3 { font-size: 1.1rem; margin-bottom: 0.6rem; }
-.feature-card p { color: var(--color-muted); font-size: 0.95rem; }
+.feature-card h3 { font-size: 1.1rem; margin-bottom: 0.6rem; color: #fff; }
+.feature-card p { color: rgba(255,255,255,0.88); font-size: 0.95rem; }
 
 /* ==========================================================================
    Trips & Rates
