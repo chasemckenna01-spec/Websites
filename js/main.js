@@ -439,6 +439,10 @@
     colors: ["#e0f0f5"]
   });
 
+  createFishSchool(document.getElementById("experienceFishCanvas"), ".experience", {
+    colors: ["#e0f0f5"]
+  });
+
   createFishSchool(document.getElementById("heroReefFishCanvas"), ".scroll-hero-reveal", {
     countDesktop: 46,
     countMobile: 24,
