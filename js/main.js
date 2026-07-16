@@ -464,11 +464,10 @@
   });
 
   /* ---------------------------------------------------------------------
-     Contact section background video — plays once (no loop attribute) as
-     the section scrolls into view, then naturally rests on its last
-     frame. `.contact-bg-fallback` shows that same last frame as a still
-     image underneath, so prefers-reduced-motion users (video never
-     triggered) and everyone else land on an identical resting visual.
+     Contact section background video — starts playing (and loops) once
+     the section scrolls into view. `.contact-bg-fallback` shows a still
+     frame underneath so prefers-reduced-motion users, who never trigger
+     the video, still land on a sensible resting visual.
   --------------------------------------------------------------------- */
   var contactBgVideo = document.getElementById("contactBgVideo");
   var contactSection = document.getElementById("contact");
