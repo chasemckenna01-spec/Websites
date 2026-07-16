@@ -462,7 +462,13 @@
       var TAIL_LERP = 0.24;
 
       var section = crewGlowTrail.closest(".crew");
-      var hasFinePointer = !window.matchMedia || window.matchMedia("(hover: hover) and (pointer: fine)").matches;
+      // Media queries report the OS's notion of "primary" input, which is
+      // wrong on touchscreen laptops/hybrids where a real mouse is in use —
+      // so treat it only as an initial guess for the idle-drift fallback,
+      // and let an actual mouse pointermove permanently confirm otherwise.
+      var likelyTouchOnly = !!(window.matchMedia && !window.matchMedia("(hover: hover) and (pointer: fine)").matches);
+      var useDrift = likelyTouchOnly;
+      var mouseConfirmed = false;
       var target = { x: 0, y: 0 };
       var active = false;
       var rafId = null;
@@ -486,6 +492,15 @@
       }
 
       function onPointerMove(e) {
+        var isMouseLike = !e.pointerType || e.pointerType === "mouse" || e.pointerType === "pen";
+        if (isMouseLike && !mouseConfirmed) {
+          mouseConfirmed = true;
+          useDrift = false;
+          crewGlowTrail.classList.remove("is-active");
+          for (var m = 0; m < dots.length; m++) { dots[m].el.classList.remove("is-active"); }
+        }
+        if (!isMouseLike) { return; }
+
         var rect = section.getBoundingClientRect();
         var inside =
           e.clientX >= rect.left && e.clientX <= rect.right &&
@@ -512,7 +527,7 @@
       }
 
       function frame() {
-        if (!hasFinePointer) {
+        if (useDrift) {
           driftT += 0.006;
           var rect = section.getBoundingClientRect();
           var visibleTop = Math.max(rect.top, 0);
@@ -549,9 +564,9 @@
         rafId = null;
       }
 
-      if (hasFinePointer) {
-        window.addEventListener("pointermove", onPointerMove, { passive: true });
-      } else {
+      window.addEventListener("pointermove", onPointerMove, { passive: true });
+
+      if (useDrift) {
         var rect0 = section.getBoundingClientRect();
         var visTop0 = Math.max(rect0.top, 0);
         var visBottom0 = Math.min(rect0.bottom, window.innerHeight || rect0.bottom);
