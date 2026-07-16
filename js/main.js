@@ -446,61 +446,24 @@
   });
 
   /* ---------------------------------------------------------------------
-     Crew section — a comet-style trail of small white glows that chase
-     the cursor, each dot lagging behind the one ahead of it, instead of
-     the fish school. Fades in/out at the section edges, paused
-     off-screen/hidden tab, skipped under prefers-reduced-motion.
+     Crew section — a single soft white glow that trails the cursor with
+     a bit of lag, instead of the fish school. Fades in/out at the
+     section edges, paused off-screen/hidden tab, skipped under
+     prefers-reduced-motion.
   --------------------------------------------------------------------- */
-  var crewGlowTrail = document.getElementById("crewGlowTrail");
+  var crewGlow = document.getElementById("crewGlow");
 
-  if (crewGlowTrail && !prefersReducedMotion && window.requestAnimationFrame) {
-    (function initCrewGlowTrail() {
-      var DOT_COUNT = 7;
-      var LEAD_SIZE = 130;
-      var TAIL_SIZE = 34;
-      var LEAD_LERP = 0.16;
-      var TAIL_LERP = 0.24;
-
-      var section = crewGlowTrail.closest(".crew");
-      // Media queries report the OS's notion of "primary" input, which is
-      // wrong on touchscreen laptops/hybrids where a real mouse is in use —
-      // so treat it only as an initial guess for the idle-drift fallback,
-      // and let an actual mouse pointermove permanently confirm otherwise.
-      var likelyTouchOnly = !!(window.matchMedia && !window.matchMedia("(hover: hover) and (pointer: fine)").matches);
-      var useDrift = likelyTouchOnly;
-      var mouseConfirmed = false;
+  if (crewGlow && !prefersReducedMotion && window.requestAnimationFrame) {
+    (function initCrewGlow() {
+      var section = crewGlow.closest(".crew");
       var target = { x: 0, y: 0 };
+      var current = { x: 0, y: 0 };
       var active = false;
       var rafId = null;
       var running = false;
       var initialized = false;
-      var dots = [];
-      var driftT = 0;
-
-      for (var i = 0; i < DOT_COUNT; i++) {
-        var t = i / (DOT_COUNT - 1);
-        var size = LEAD_SIZE - (LEAD_SIZE - TAIL_SIZE) * t;
-        var el = document.createElement("div");
-        el.className = "crew-glow-dot";
-        el.style.width = size + "px";
-        el.style.height = size + "px";
-        el.style.marginLeft = (-size / 2) + "px";
-        el.style.marginTop = (-size / 2) + "px";
-        el.style.setProperty("--dot-opacity", (1 - t * 0.75).toFixed(2));
-        crewGlowTrail.appendChild(el);
-        dots.push({ el: el, x: 0, y: 0, lerp: i === 0 ? LEAD_LERP : TAIL_LERP });
-      }
 
       function onPointerMove(e) {
-        var isMouseLike = !e.pointerType || e.pointerType === "mouse" || e.pointerType === "pen";
-        if (isMouseLike && !mouseConfirmed) {
-          mouseConfirmed = true;
-          useDrift = false;
-          crewGlowTrail.classList.remove("is-active");
-          for (var m = 0; m < dots.length; m++) { dots[m].el.classList.remove("is-active"); }
-        }
-        if (!isMouseLike) { return; }
-
         var rect = section.getBoundingClientRect();
         var inside =
           e.clientX >= rect.left && e.clientX <= rect.right &&
@@ -510,45 +473,22 @@
           target.x = e.clientX - rect.left;
           target.y = e.clientY - rect.top;
           if (!active || !initialized) {
-            for (var i = 0; i < dots.length; i++) {
-              dots[i].x = target.x;
-              dots[i].y = target.y;
-            }
+            current.x = target.x;
+            current.y = target.y;
             initialized = true;
           }
           active = true;
-          crewGlowTrail.classList.add("is-active");
-          for (var j = 0; j < dots.length; j++) { dots[j].el.classList.add("is-active"); }
+          crewGlow.classList.add("is-active");
         } else if (active) {
           active = false;
-          crewGlowTrail.classList.remove("is-active");
-          for (var k = 0; k < dots.length; k++) { dots[k].el.classList.remove("is-active"); }
+          crewGlow.classList.remove("is-active");
         }
       }
 
       function frame() {
-        if (useDrift) {
-          driftT += 0.006;
-          var rect = section.getBoundingClientRect();
-          var visibleTop = Math.max(rect.top, 0);
-          var visibleBottom = Math.min(rect.bottom, window.innerHeight || rect.bottom);
-          var visibleHeight = Math.max(visibleBottom - visibleTop, 1);
-          var cx = rect.width / 2;
-          var cy = (visibleTop - rect.top) + visibleHeight / 2;
-          var rx = Math.max(rect.width * 0.28, 40);
-          var ry = Math.max(visibleHeight * 0.22, 24);
-          target.x = cx + Math.cos(driftT) * rx;
-          target.y = cy + Math.sin(driftT * 1.6) * ry;
-        }
-
-        var leadTarget = target;
-        for (var i = 0; i < dots.length; i++) {
-          var dot = dots[i];
-          dot.x += (leadTarget.x - dot.x) * dot.lerp;
-          dot.y += (leadTarget.y - dot.y) * dot.lerp;
-          dot.el.style.transform = "translate3d(" + dot.x + "px, " + dot.y + "px, 0)";
-          leadTarget = dot;
-        }
+        current.x += (target.x - current.x) * 0.06;
+        current.y += (target.y - current.y) * 0.06;
+        crewGlow.style.transform = "translate3d(" + current.x + "px, " + current.y + "px, 0)";
         rafId = window.requestAnimationFrame(frame);
       }
 
@@ -565,20 +505,6 @@
       }
 
       window.addEventListener("pointermove", onPointerMove, { passive: true });
-
-      if (useDrift) {
-        var rect0 = section.getBoundingClientRect();
-        var visTop0 = Math.max(rect0.top, 0);
-        var visBottom0 = Math.min(rect0.bottom, window.innerHeight || rect0.bottom);
-        target.x = rect0.width / 2;
-        target.y = (visTop0 - rect0.top) + Math.max(visBottom0 - visTop0, 1) / 2;
-        for (var d = 0; d < dots.length; d++) {
-          dots[d].x = target.x;
-          dots[d].y = target.y;
-          dots[d].el.classList.add("is-active");
-        }
-        crewGlowTrail.classList.add("is-active");
-      }
 
       if (document.visibilityState !== "hidden") { start(); }
 
