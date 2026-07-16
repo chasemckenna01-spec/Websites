@@ -504,7 +504,11 @@
         rafId = null;
       }
 
+      // Listen for both — some tablet/hybrid browsers with an external
+      // mouse attached don't reliably dispatch pointermove, but the older
+      // mousemove event fires for real mouse movement almost everywhere.
       window.addEventListener("pointermove", onPointerMove, { passive: true });
+      window.addEventListener("mousemove", onPointerMove, { passive: true });
 
       if (document.visibilityState !== "hidden") { start(); }
 
