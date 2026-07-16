@@ -53,6 +53,28 @@
   });
 
   /* ---------------------------------------------------------------------
+     Hero background video — reinforce the native autoplay attribute with
+     an explicit play() call. Some browsers are inconsistent about
+     honoring declarative autoplay on a video sitting inside an element
+     GSAP transforms immediately on load; a scripted play() is honored
+     more reliably. Muted, so this needs no user gesture. Silently no-ops
+     if blocked — the poster frame is a fine resting state either way.
+  --------------------------------------------------------------------- */
+  var heroVideo = document.querySelector(".scroll-hero-video");
+  if (heroVideo) {
+    var kickHeroVideo = function () {
+      var playPromise = heroVideo.play();
+      if (playPromise && playPromise.catch) { playPromise.catch(function () {}); }
+    };
+    if (heroVideo.readyState >= 2) {
+      kickHeroVideo();
+    } else {
+      heroVideo.addEventListener("loadeddata", kickHeroVideo, { once: true });
+    }
+    window.addEventListener("load", kickHeroVideo);
+  }
+
+  /* ---------------------------------------------------------------------
      Scroll reveal — GSAP + ScrollTrigger if available, IntersectionObserver
      fallback otherwise. Reduced-motion users see content immediately.
   --------------------------------------------------------------------- */
