@@ -434,12 +434,10 @@ p { margin: 0; }
 .scroll-hero-reveal {
   position: relative;
   overflow: hidden;
-  /* Colors of the pua aloalo (yellow hibiscus), Hawaii's state flower —
-     golden petals deepening into a maroon-red throat at the center. */
+  /* Tropical palm-tree green. */
   background:
-    radial-gradient(55% 60% at 50% 55%, rgba(139, 30, 30, 0.55), transparent 70%),
-    radial-gradient(120% 70% at 50% -10%, rgba(255, 214, 90, 0.55), transparent 60%),
-    linear-gradient(195deg, #ffd447 0%, #f5b632 30%, #e8813f 60%, #b84a1f 100%);
+    radial-gradient(120% 70% at 50% -10%, rgba(116, 198, 157, 0.35), transparent 60%),
+    linear-gradient(195deg, #2d6a4f 0%, #1b4332 40%, #123326 70%, #0b2419 100%);
   padding-top: 1rem;
   text-align: center;
 }
@@ -447,20 +445,46 @@ p { margin: 0; }
 .scroll-hero-reveal .hero-sub,
 .scroll-hero-reveal .hero-actions,
 .scroll-hero-reveal .hero-stats { margin-inline: auto; }
-.scroll-hero-reveal .hero-sub { color: rgba(61, 20, 11, 0.86); }
-.scroll-hero-reveal .hero-stats dt { color: #7a1f16; }
-.scroll-hero-reveal .hero-stats dd { color: rgba(61, 20, 11, 0.72); }
-.scroll-hero-reveal .btn-ghost {
-  background: rgba(61, 20, 11, 0.1);
-  color: #3d140b;
-  border-color: rgba(61, 20, 11, 0.45);
+
+/* Hibiscus stems peeking in from the edges. Defined once as a symbol,
+   reused by each .hibiscus-decor instance via <use>. */
+.hibiscus-sprite { position: absolute; width: 0; height: 0; overflow: hidden; }
+.hibiscus-decor {
+  position: absolute;
+  z-index: 1;
+  pointer-events: none;
 }
-.scroll-hero-reveal .btn-ghost:hover {
-  background: rgba(61, 20, 11, 0.18);
-  border-color: #3d140b;
+.hibiscus-decor svg { width: 100%; height: 100%; display: block; }
+.hibiscus-stem { fill: none; stroke: #2d6a4f; stroke-width: 6; stroke-linecap: round; }
+.hibiscus-leaf { fill: #40916c; }
+.hibiscus-petal path { fill: #e0233f; }
+.hibiscus-stamen { fill: none; stroke: #e0233f; stroke-width: 3; stroke-linecap: round; }
+.hibiscus-anther { fill: #e0233f; }
+
+.hibiscus-decor--a {
+  left: -28px;
+  bottom: -8px;
+  width: 130px;
+  height: 165px;
+  transform: rotate(-8deg);
 }
-.scroll-hero-reveal .crew-glow {
-  background: radial-gradient(circle, rgba(139, 30, 30, 0.5) 0%, rgba(139, 30, 30, 0.22) 45%, transparent 72%);
+.hibiscus-decor--b {
+  right: -24px;
+  top: 70px;
+  width: 96px;
+  height: 125px;
+  transform: rotate(18deg) scaleX(-1);
+}
+.hibiscus-decor--c {
+  right: -6px;
+  bottom: 30px;
+  width: 76px;
+  height: 98px;
+  transform: rotate(4deg) scaleX(-1);
+}
+@media (max-width: 700px) {
+  .hibiscus-decor--b, .hibiscus-decor--c { display: none; }
+  .hibiscus-decor--a { width: 92px; height: 118px; }
 }
 
 .hero-eyebrow {
