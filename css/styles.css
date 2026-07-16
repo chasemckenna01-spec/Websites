@@ -174,16 +174,28 @@ p { margin: 0; }
   top: 0;
   z-index: 100;
   padding-block: 1.1rem;
-  transition: background-color var(--dur-med) var(--ease-out),
+  transition: background var(--dur-med) var(--ease-out),
               padding var(--dur-med) var(--ease-out),
               box-shadow var(--dur-med) var(--ease-out);
 }
+.site-header::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--color-ocean-400), var(--color-sunset-500));
+  opacity: 0;
+  transition: opacity var(--dur-med) var(--ease-out);
+}
 .site-header.is-scrolled {
-  background: rgba(11, 42, 69, 0.92);
+  background: linear-gradient(120deg, rgba(11, 42, 69, 0.94) 0%, rgba(13, 92, 118, 0.9) 100%);
   backdrop-filter: blur(10px);
   padding-block: 0.7rem;
   box-shadow: 0 8px 30px -12px rgba(0,0,0,0.35);
 }
+.site-header.is-scrolled::after { opacity: 1; }
 
 .header-inner {
   display: flex;
@@ -206,6 +218,7 @@ p { margin: 0; }
   object-fit: cover;
   padding: 3px;
   flex-shrink: 0;
+  box-shadow: 0 0 0 2px rgba(232, 129, 63, 0.4);
 }
 .brand-name {
   font-family: var(--font-display);
@@ -857,7 +870,21 @@ section h2 { font-size: var(--fs-h2); font-weight: 500; }
 /* ==========================================================================
    Footer
    ========================================================================== */
-.site-footer { background: var(--color-navy-950); color: rgba(255,255,255,0.7); padding-block: var(--space-xl); }
+.site-footer {
+  position: relative;
+  background: linear-gradient(180deg, var(--color-navy-950) 0%, #0c2338 100%);
+  color: rgba(255,255,255,0.7);
+  padding-block: var(--space-xl);
+}
+.site-footer::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--color-sunset-500), var(--color-ocean-400));
+}
 .footer-inner {
   display: flex;
   flex-wrap: wrap;
@@ -869,6 +896,15 @@ section h2 { font-size: var(--fs-h2); font-weight: 500; }
 .footer-links { display: flex; flex-wrap: wrap; gap: 1.5rem; }
 .footer-links a:hover { color: var(--color-sunset-400); }
 .footer-meta { width: 100%; font-size: 0.8rem; color: rgba(255,255,255,0.4); text-align: center; padding-top: 1.5rem; border-top: 1px solid rgba(255,255,255,0.08); margin-top: 0.5rem; }
+.footer-mahalo {
+  width: 100%;
+  text-align: center;
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 1rem;
+  color: var(--color-sunset-400);
+  margin-top: 0.6rem;
+}
 
 /* ==========================================================================
    Scroll reveal (JS toggles .is-visible; CSS fallback shows content if JS off)
