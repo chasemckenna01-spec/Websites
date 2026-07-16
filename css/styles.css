@@ -434,9 +434,12 @@ p { margin: 0; }
 .scroll-hero-reveal {
   position: relative;
   overflow: hidden;
+  /* Colors of the pua aloalo (yellow hibiscus), Hawaii's state flower —
+     golden petals deepening into a maroon-red throat at the center. */
   background:
-    radial-gradient(120% 70% at 50% -10%, rgba(94, 234, 212, 0.4), transparent 60%),
-    linear-gradient(195deg, #1a94b0 0%, #157a9c 35%, #106389 70%, #0c4f70 100%);
+    radial-gradient(55% 60% at 50% 55%, rgba(139, 30, 30, 0.55), transparent 70%),
+    radial-gradient(120% 70% at 50% -10%, rgba(255, 214, 90, 0.55), transparent 60%),
+    linear-gradient(195deg, #ffd447 0%, #f5b632 30%, #e8813f 60%, #b84a1f 100%);
   padding-top: 1rem;
   text-align: center;
 }
@@ -444,6 +447,21 @@ p { margin: 0; }
 .scroll-hero-reveal .hero-sub,
 .scroll-hero-reveal .hero-actions,
 .scroll-hero-reveal .hero-stats { margin-inline: auto; }
+.scroll-hero-reveal .hero-sub { color: rgba(61, 20, 11, 0.86); }
+.scroll-hero-reveal .hero-stats dt { color: #7a1f16; }
+.scroll-hero-reveal .hero-stats dd { color: rgba(61, 20, 11, 0.72); }
+.scroll-hero-reveal .btn-ghost {
+  background: rgba(61, 20, 11, 0.1);
+  color: #3d140b;
+  border-color: rgba(61, 20, 11, 0.45);
+}
+.scroll-hero-reveal .btn-ghost:hover {
+  background: rgba(61, 20, 11, 0.18);
+  border-color: #3d140b;
+}
+.scroll-hero-reveal .crew-glow {
+  background: radial-gradient(circle, rgba(139, 30, 30, 0.5) 0%, rgba(139, 30, 30, 0.22) 45%, transparent 72%);
+}
 
 .hero-eyebrow {
   font-size: 0.8rem;
