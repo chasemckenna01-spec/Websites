@@ -223,6 +223,8 @@
     var POINTER_R = 130;
     var POINTER_FORCE = 1.1;
     var colors = options.colors || ["#ffffff"];
+    var SIZE_MIN = options.sizeMin || 1.6;
+    var SIZE_MAX = options.sizeMax || 3.4;
 
     var pointer = { x: -9999, y: -9999, active: false };
     var idleTimer = null;
@@ -270,7 +272,7 @@
           y: rand(0, height),
           vx: Math.cos(angle) * 0.4,
           vy: Math.sin(angle) * 0.4,
-          size: rand(1.6, 3.4),
+          size: rand(SIZE_MIN, SIZE_MAX),
           wander: rand(0, Math.PI * 2),
           twinkle: rand(0, Math.PI * 2),
           spriteIndex: Math.floor(rand(0, sprites.length))
@@ -440,7 +442,11 @@
   });
 
   createFishSchool(document.getElementById("experienceFishCanvas"), ".experience", {
-    colors: ["#e0f0f5"]
+    colors: ["#e0f0f5"],
+    countDesktop: 22,
+    countMobile: 12,
+    sizeMin: 2.4,
+    sizeMax: 4.8
   });
 
   createFishSchool(document.getElementById("heroReefFishCanvas"), ".scroll-hero-reveal", {
