@@ -451,47 +451,6 @@ p { margin: 0; }
 .scroll-hero-reveal .hero-actions,
 .scroll-hero-reveal .hero-stats { margin-inline: auto; }
 
-/* Hibiscus stems peeking in from the edges. Defined once as a symbol,
-   reused by each .hibiscus-decor instance via <use>. */
-.hibiscus-sprite { position: absolute; width: 0; height: 0; overflow: hidden; }
-.hibiscus-decor {
-  position: absolute;
-  z-index: 1;
-  pointer-events: none;
-}
-.hibiscus-decor svg { width: 100%; height: 100%; display: block; }
-.hibiscus-stem { fill: none; stroke: #2d6a4f; stroke-width: 6; stroke-linecap: round; }
-.hibiscus-leaf { fill: #40916c; }
-.hibiscus-petal path { fill: #e0233f; }
-.hibiscus-stamen { fill: none; stroke: #e0233f; stroke-width: 3; stroke-linecap: round; }
-.hibiscus-anther { fill: #e0233f; }
-
-.hibiscus-decor--a {
-  left: -28px;
-  bottom: -8px;
-  width: 130px;
-  height: 165px;
-  transform: rotate(-8deg);
-}
-.hibiscus-decor--b {
-  right: -24px;
-  top: 70px;
-  width: 96px;
-  height: 125px;
-  transform: rotate(18deg) scaleX(-1);
-}
-.hibiscus-decor--c {
-  right: -6px;
-  bottom: 30px;
-  width: 76px;
-  height: 98px;
-  transform: rotate(4deg) scaleX(-1);
-}
-@media (max-width: 700px) {
-  .hibiscus-decor--b, .hibiscus-decor--c { display: none; }
-  .hibiscus-decor--a { width: 92px; height: 118px; }
-}
-
 .hero-eyebrow {
   font-size: 0.8rem;
   letter-spacing: 0.18em;

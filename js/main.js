@@ -225,7 +225,7 @@
     var colors = options.colors || ["#ffffff"];
     var SIZE_MIN = options.sizeMin || 1.6;
     var SIZE_MAX = options.sizeMax || 3.4;
-    var BIG_CHANCE = options.bigChance || 0;
+    var BIG_COUNT = options.bigCount || 0;
     var BIG_SIZE_MIN = options.bigSizeMin || SIZE_MAX * 1.8;
     var BIG_SIZE_MAX = options.bigSizeMax || SIZE_MAX * 2.6;
 
@@ -270,7 +270,7 @@
       fish = [];
       for (var i = 0; i < COUNT; i++) {
         var angle = rand(0, Math.PI * 2);
-        var isBig = BIG_CHANCE > 0 && Math.random() < BIG_CHANCE;
+        var isBig = i < BIG_COUNT;
         fish.push({
           x: rand(0, width),
           y: rand(0, height),
@@ -278,6 +278,7 @@
           vy: Math.sin(angle) * 0.4,
           size: isBig ? rand(BIG_SIZE_MIN, BIG_SIZE_MAX) : rand(SIZE_MIN, SIZE_MAX),
           maxSpeed: isBig ? MAX_SPEED * 0.55 : MAX_SPEED,
+          big: isBig,
           wander: rand(0, Math.PI * 2),
           twinkle: rand(0, Math.PI * 2),
           spriteIndex: Math.floor(rand(0, sprites.length))
@@ -306,6 +307,7 @@
         for (var j = 0; j < fish.length; j++) {
           if (i === j) continue;
           var o = fish[j];
+          if (f.big || o.big) continue;
           var dx = f.x - o.x;
           var dy = f.y - o.y;
           var d = Math.sqrt(dx * dx + dy * dy);
@@ -448,9 +450,9 @@
 
   createFishSchool(document.getElementById("heroRevealFishCanvas"), ".scroll-hero-reveal", {
     colors: ["#e0f0f5"],
-    bigChance: 0.05,
-    bigSizeMin: 6.5,
-    bigSizeMax: 9.5
+    bigCount: 1,
+    bigSizeMin: 10,
+    bigSizeMax: 13.5
   });
 
   createFishSchool(document.getElementById("experienceFishCanvas"), ".experience", {
