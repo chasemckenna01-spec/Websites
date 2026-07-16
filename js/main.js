@@ -473,17 +473,35 @@
   var contactSection = document.getElementById("contact");
 
   if (contactBgVideo && contactSection && !prefersReducedMotion) {
-    var videoTriggered = false;
+    var videoPlaying = false;
+    var retryOnGesture = null;
 
     function playContactVideo() {
-      if (videoTriggered) return;
-      videoTriggered = true;
+      if (videoPlaying) return;
       var playPromise = contactBgVideo.play();
       if (playPromise && playPromise.then) {
         playPromise
-          .then(function () { contactBgVideo.classList.add("is-playing"); })
-          .catch(function () { /* autoplay blocked; fallback still image stays visible */ });
+          .then(function () {
+            videoPlaying = true;
+            contactBgVideo.classList.add("is-playing");
+            if (retryOnGesture) {
+              document.removeEventListener("pointerdown", retryOnGesture);
+              document.removeEventListener("touchstart", retryOnGesture);
+              retryOnGesture = null;
+            }
+          })
+          .catch(function () {
+            // Autoplay blocked (e.g. iOS Low Power Mode) — a real user
+            // gesture is exempt from that restriction, so retry on the
+            // next tap/click anywhere on the page.
+            if (!retryOnGesture) {
+              retryOnGesture = function () { playContactVideo(); };
+              document.addEventListener("pointerdown", retryOnGesture, { passive: true });
+              document.addEventListener("touchstart", retryOnGesture, { passive: true });
+            }
+          });
       } else {
+        videoPlaying = true;
         contactBgVideo.classList.add("is-playing");
       }
     }
