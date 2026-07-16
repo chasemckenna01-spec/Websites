@@ -434,34 +434,11 @@ p { margin: 0; }
 .scroll-hero-reveal {
   position: relative;
   overflow: hidden;
-  background: var(--color-navy-950);
+  background:
+    radial-gradient(120% 70% at 50% -10%, rgba(94, 234, 212, 0.4), transparent 60%),
+    linear-gradient(195deg, #1a94b0 0%, #157a9c 35%, #106389 70%, #0c4f70 100%);
   padding-top: 1rem;
   text-align: center;
-}
-.hero-reveal-bg { position: absolute; inset: 0; z-index: 0; }
-.hero-reveal-bg-img {
-  position: absolute;
-  inset: 0;
-  background-image: url('../assets/images/reef-bg-500.jpg');
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
-}
-@media (min-width: 700px) {
-  .hero-reveal-bg-img { background-image: url('../assets/images/reef-bg-850.jpg'); }
-}
-.hero-reveal-bg-overlay {
-  position: absolute;
-  inset: 0;
-  background:
-    radial-gradient(80% 60% at 50% 0%, rgba(8,26,44,0.35), transparent 60%),
-    linear-gradient(180deg, rgba(8,26,44,0.88) 0%, rgba(8,26,44,0.8) 45%, rgba(8,26,44,0.92) 100%);
-}
-.hero-reveal-fish-canvas {
-  position: absolute;
-  inset: 0;
-  z-index: 1;
-  pointer-events: none;
 }
 .scroll-hero-reveal > .container { position: relative; z-index: 2; padding-bottom: 4rem; }
 .scroll-hero-reveal .hero-sub,
