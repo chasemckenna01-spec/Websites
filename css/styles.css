@@ -761,7 +761,7 @@ section h2 { font-size: var(--fs-h2); font-weight: 500; }
 .waters-reveal-media {
   position: absolute;
   inset: 0;
-  background-image: url('../assets/images/waters-bay-700.jpg');
+  background-image: url('../assets/images/waters-palms-700.jpg');
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
@@ -774,7 +774,7 @@ section h2 { font-size: var(--fs-h2); font-weight: 500; }
   );
 }
 @media (min-width: 700px) {
-  .waters-reveal-media { background-image: url('../assets/images/waters-bay-1342.jpg'); }
+  .waters-reveal-media { background-image: url('../assets/images/waters-palms-1500.jpg'); }
 }
 .waters-reveal-caption {
   position: absolute;
