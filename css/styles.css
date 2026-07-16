@@ -713,30 +713,7 @@ section h2 { font-size: var(--fs-h2); font-weight: 500; }
 /* ==========================================================================
    Our Waters
    ========================================================================== */
-.waters { background: var(--color-sand-100); padding-bottom: 0; }
-.waters-copy {
-  max-width: 640px;
-  margin-inline: auto;
-  text-align: center;
-  padding-bottom: var(--space-2xl);
-}
-.waters-copy p { color: var(--color-ink-soft); margin-bottom: 1.5rem; font-size: 1.02rem; }
-.waters-list {
-  display: inline-flex;
-  flex-direction: column;
-  gap: 0.9rem;
-  text-align: left;
-}
-.waters-list li { padding-left: 1.6rem; position: relative; font-size: 0.95rem; color: var(--color-ink-soft); }
-.waters-list li::before {
-  content: "";
-  position: absolute;
-  left: 0; top: 0.55em;
-  width: 8px; height: 8px;
-  border-radius: 50%;
-  background: var(--color-ocean-600);
-}
-.waters-list strong { color: var(--color-navy-900); }
+.waters { padding-block: 0; }
 
 /* Full-bleed scroll-clip photo reveal — recreated natively (no React/
    framer-motion) with the same technique as the hero: a single --p
@@ -744,7 +721,9 @@ section h2 { font-size: var(--fs-h2); font-weight: 500; }
    ScrollTrigger pins the section and scrubs --p on scroll. --p
    defaults to 1 in CSS, so with no JS or reduced motion the photo just
    renders fully revealed at rest instead of stuck in its clipped
-   starting state. */
+   starting state. The section copy now lives as a permanent overlay on
+   top of the photo (not a separate block before it), so "Our Waters"
+   reads as one page rather than two stacked screens. */
 .waters-reveal {
   position: relative;
   width: 100vw;
@@ -756,11 +735,15 @@ section h2 { font-size: var(--fs-h2); font-weight: 500; }
   --p: 1;
   position: relative;
   height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   overflow: hidden;
 }
 .waters-reveal-media {
   position: absolute;
   inset: 0;
+  z-index: 0;
   background-image: url('../assets/images/waters-palms-700.jpg');
   background-position: center;
   background-repeat: no-repeat;
@@ -776,20 +759,42 @@ section h2 { font-size: var(--fs-h2); font-weight: 500; }
 @media (min-width: 700px) {
   .waters-reveal-media { background-image: url('../assets/images/waters-palms-1500.jpg'); }
 }
-.waters-reveal-caption {
+.waters-reveal-scrim {
   position: absolute;
+  inset: 0;
   z-index: 1;
-  left: 50%;
-  bottom: 2rem;
-  transform: translateX(-50%);
-  margin: 0;
-  color: rgba(255,255,255,0.9);
-  font-size: 0.78rem;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  text-shadow: 0 2px 12px rgba(0,0,0,0.5);
-  opacity: var(--p);
+  background:
+    radial-gradient(60% 50% at 50% 45%, rgba(8,26,44,0.55), transparent 70%),
+    linear-gradient(180deg, rgba(8,26,44,0.72) 0%, rgba(8,26,44,0.45) 40%, rgba(8,26,44,0.75) 100%);
 }
+.waters-reveal-content {
+  position: relative;
+  z-index: 2;
+  max-width: 640px;
+  margin-inline: auto;
+  text-align: center;
+  color: #fff;
+  padding-block: 6rem;
+}
+.waters-reveal-content .eyebrow { color: var(--color-sunset-400); }
+.waters-reveal-content h2 { color: #fff; }
+.waters-reveal-content p { color: rgba(255,255,255,0.85); margin-bottom: 1.5rem; font-size: 1.02rem; }
+.waters-list {
+  display: inline-flex;
+  flex-direction: column;
+  gap: 0.9rem;
+  text-align: left;
+}
+.waters-list li { padding-left: 1.6rem; position: relative; font-size: 0.95rem; color: rgba(255,255,255,0.85); }
+.waters-list li::before {
+  content: "";
+  position: absolute;
+  left: 0; top: 0.55em;
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: var(--color-sunset-400);
+}
+.waters-list strong { color: #fff; }
 
 /* ==========================================================================
    Contact
