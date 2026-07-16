@@ -448,13 +448,6 @@
     colors: ["#e0f0f5"]
   });
 
-  createFishSchool(document.getElementById("heroRevealFishCanvas"), ".scroll-hero-reveal", {
-    colors: ["#e0f0f5"],
-    bigCount: 1,
-    bigSizeMin: 10,
-    bigSizeMax: 13.5
-  });
-
   createFishSchool(document.getElementById("experienceFishCanvas"), ".experience", {
     colors: ["#e0f0f5"],
     countDesktop: 22,
