@@ -225,6 +225,9 @@
     var colors = options.colors || ["#ffffff"];
     var SIZE_MIN = options.sizeMin || 1.6;
     var SIZE_MAX = options.sizeMax || 3.4;
+    var BIG_CHANCE = options.bigChance || 0;
+    var BIG_SIZE_MIN = options.bigSizeMin || SIZE_MAX * 1.8;
+    var BIG_SIZE_MAX = options.bigSizeMax || SIZE_MAX * 2.6;
 
     var pointer = { x: -9999, y: -9999, active: false };
     var idleTimer = null;
@@ -267,12 +270,14 @@
       fish = [];
       for (var i = 0; i < COUNT; i++) {
         var angle = rand(0, Math.PI * 2);
+        var isBig = BIG_CHANCE > 0 && Math.random() < BIG_CHANCE;
         fish.push({
           x: rand(0, width),
           y: rand(0, height),
           vx: Math.cos(angle) * 0.4,
           vy: Math.sin(angle) * 0.4,
-          size: rand(SIZE_MIN, SIZE_MAX),
+          size: isBig ? rand(BIG_SIZE_MIN, BIG_SIZE_MAX) : rand(SIZE_MIN, SIZE_MAX),
+          maxSpeed: isBig ? MAX_SPEED * 0.55 : MAX_SPEED,
           wander: rand(0, Math.PI * 2),
           twinkle: rand(0, Math.PI * 2),
           spriteIndex: Math.floor(rand(0, sprites.length))
@@ -347,7 +352,7 @@
         var steer = limitVec({ x: ax, y: ay }, MAX_FORCE);
         f.vx += steer.x * 0.6;
         f.vy += steer.y * 0.6;
-        var vel = limitVec({ x: f.vx, y: f.vy }, MAX_SPEED);
+        var vel = limitVec({ x: f.vx, y: f.vy }, f.maxSpeed);
         f.vx = vel.x;
         f.vy = vel.y;
 
@@ -441,6 +446,13 @@
     colors: ["#e0f0f5"]
   });
 
+  createFishSchool(document.getElementById("heroRevealFishCanvas"), ".scroll-hero-reveal", {
+    colors: ["#e0f0f5"],
+    bigChance: 0.05,
+    bigSizeMin: 6.5,
+    bigSizeMax: 9.5
+  });
+
   createFishSchool(document.getElementById("experienceFishCanvas"), ".experience", {
     colors: ["#e0f0f5"],
     countDesktop: 22,
@@ -532,7 +544,6 @@
   }
 
   createCursorGlow(document.getElementById("crewGlow"), ".crew");
-  createCursorGlow(document.getElementById("heroRevealGlow"), ".scroll-hero-reveal");
 
   /* ---------------------------------------------------------------------
      Contact section background video — plays once (no loop attribute) as

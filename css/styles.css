@@ -434,12 +434,17 @@ p { margin: 0; }
 .scroll-hero-reveal {
   position: relative;
   overflow: hidden;
-  /* Tropical palm-tree green. */
   background:
-    radial-gradient(120% 70% at 50% -10%, rgba(116, 198, 157, 0.35), transparent 60%),
-    linear-gradient(195deg, #2d6a4f 0%, #1b4332 40%, #123326 70%, #0b2419 100%);
+    radial-gradient(120% 70% at 50% -10%, rgba(94, 234, 212, 0.4), transparent 60%),
+    linear-gradient(195deg, #1a94b0 0%, #157a9c 35%, #106389 70%, #0c4f70 100%);
   padding-top: 1rem;
   text-align: center;
+}
+.hero-reveal-fish-canvas {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
 }
 .scroll-hero-reveal > .container { position: relative; z-index: 2; padding-bottom: 4rem; }
 .scroll-hero-reveal .hero-sub,
