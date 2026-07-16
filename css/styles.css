@@ -623,24 +623,12 @@ section h2 { font-size: var(--fs-h2); font-weight: 500; }
 .crew .eyebrow { color: var(--color-sunset-400); }
 .crew h2 { color: #fff; }
 
-.crew-glow {
+.crew-fish-canvas {
   position: absolute;
-  top: 0;
-  left: 0;
-  width: 340px;
-  height: 340px;
-  margin-left: -170px;
-  margin-top: -170px;
-  border-radius: 50%;
-  background: radial-gradient(circle, rgba(255,255,255,0.42) 0%, rgba(255,255,255,0.18) 45%, transparent 72%);
-  filter: blur(6px);
-  pointer-events: none;
+  inset: 0;
   z-index: 0;
-  opacity: 0;
-  transition: opacity 400ms var(--ease-out);
-  will-change: transform;
+  pointer-events: none;
 }
-.crew-glow.is-active { opacity: 1; }
 
 .crew > .container {
   position: relative;

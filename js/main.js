@@ -456,89 +456,12 @@
     sizeMax: 4.8
   });
 
-  /* ---------------------------------------------------------------------
-     A single soft white glow that trails the cursor with a bit of lag.
-     Fades in/out at the section edges, paused off-screen/hidden tab,
-     skipped under prefers-reduced-motion. Used by both the Crew section
-     and the hero reveal section.
-  --------------------------------------------------------------------- */
-  function createCursorGlow(glowEl, sectionSelector) {
-    if (!glowEl || prefersReducedMotion || !window.requestAnimationFrame) return;
-
-    var section = glowEl.closest(sectionSelector);
-    if (!section) return;
-
-    var target = { x: 0, y: 0 };
-    var current = { x: 0, y: 0 };
-    var active = false;
-    var rafId = null;
-    var running = false;
-    var initialized = false;
-
-    function onPointerMove(e) {
-      var rect = section.getBoundingClientRect();
-      var inside =
-        e.clientX >= rect.left && e.clientX <= rect.right &&
-        e.clientY >= rect.top && e.clientY <= rect.bottom;
-
-      if (inside) {
-        target.x = e.clientX - rect.left;
-        target.y = e.clientY - rect.top;
-        if (!active || !initialized) {
-          current.x = target.x;
-          current.y = target.y;
-          initialized = true;
-        }
-        active = true;
-        glowEl.classList.add("is-active");
-      } else if (active) {
-        active = false;
-        glowEl.classList.remove("is-active");
-      }
-    }
-
-    function frame() {
-      current.x += (target.x - current.x) * 0.06;
-      current.y += (target.y - current.y) * 0.06;
-      glowEl.style.transform = "translate3d(" + current.x + "px, " + current.y + "px, 0)";
-      rafId = window.requestAnimationFrame(frame);
-    }
-
-    function start() {
-      if (running) return;
-      running = true;
-      rafId = window.requestAnimationFrame(frame);
-    }
-
-    function stop() {
-      running = false;
-      if (rafId) window.cancelAnimationFrame(rafId);
-      rafId = null;
-    }
-
-    // Listen for both — some tablet/hybrid browsers with an external
-    // mouse attached don't reliably dispatch pointermove, but the older
-    // mousemove event fires for real mouse movement almost everywhere.
-    window.addEventListener("pointermove", onPointerMove, { passive: true });
-    window.addEventListener("mousemove", onPointerMove, { passive: true });
-
-    if (document.visibilityState !== "hidden") { start(); }
-
-    document.addEventListener("visibilitychange", function () {
-      if (document.hidden) { stop(); } else { start(); }
-    });
-
-    if (window.IntersectionObserver) {
-      var glowObserver = new IntersectionObserver(function (entries) {
-        entries.forEach(function (entry) {
-          if (entry.isIntersecting && !document.hidden) { start(); } else { stop(); }
-        });
-      }, { threshold: 0.05 });
-      glowObserver.observe(section);
-    }
-  }
-
-  createCursorGlow(document.getElementById("crewGlow"), ".crew");
+  createFishSchool(document.getElementById("crewFishCanvas"), ".crew", {
+    colors: ["#e0f0f5"],
+    bigCount: 1,
+    bigSizeMin: 10,
+    bigSizeMax: 13.5
+  });
 
   /* ---------------------------------------------------------------------
      Contact section background video — plays once (no loop attribute) as
